@@ -1,11 +1,5 @@
-super_cadena = 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.'
-var1 = 2
-var2 = 'variables'
-
 # STRING FORMANTING
 # print(f'Ejemplo de concatenacion utilizando {var1} {var2}')
-
-
 
 # # LEN: devuelve la longitud de la cadena (cuantos caracteres tiene, incluyendo espacios).
 # cantidad_elementos = len(cadena)
@@ -36,5 +30,4 @@ var2 = 'variables'
 # super_cadena.count('Lorem')
 # # COUNT: cuenta cuántas veces aparece un valor específico en una lista o cadena.
 
-cantidad_lorem = super_cadena.count('Lorem')
-print(cantidad_lorem)
+
