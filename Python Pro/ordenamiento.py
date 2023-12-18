@@ -34,3 +34,8 @@ for i in range(1, len(checklist)):
 checklist[minimal_index] = checklist[0]
 checklist[0] = minimal_value
 print(checklist)
+
+# 4. IMPLEMENTAR CICLOS ANIDADOS PARA QUE NUESTRO ALGORITMO DE ORDENAMIENTO SE REPITA,
+#  HASTA QUE TENGAMOS LA LISTA CON TODOS LOS ELEMENTOS REEMPLAZADOS DE MENOR A MAYOR.
+
+for j in range()
