@@ -45,3 +45,4 @@ for j in range(len(checklist) - 1):
     checklist[minimal_index] = checklist[j]
     checklist[j] = minimal_value
 print(checklist)
+
