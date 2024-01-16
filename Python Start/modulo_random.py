@@ -8,13 +8,13 @@ from random import *
 # print(numero_2_decimales)
 
 # PROGRAMA PARA CALCULAR SORTEO DE EQUIPOS ALEATORIAMENTE:
-# total = int(input('El numero de equipos: '))
-# participant_1 = randint(1, total)
-# participant_2 = randint(1, total)
+"""total = int(input('El numero de equipos: '))
+participant_1 = randint(1, total)
+participant_2 = randint(1, total)
 
-# print(f'Equipo {participant_1} vs Equipo {participant_2}')
+print(f'Equipo {participant_1} vs Equipo {participant_2}')"""
 
-#PROGRAMA PARA CALCULAR DISTRIBUCION DE JUGADORES A LOS EQUIPOS DE MANERA ALEATORIA:
+# PROGRAMA PARA CALCULAR DISTRIBUCION DE JUGADORES A LOS EQUIPOS DE MANERA ALEATORIA:
 name = input('Nombre de la persona (off - finalizar): ')
 
 while name != 'off':

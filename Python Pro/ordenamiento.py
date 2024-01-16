@@ -25,9 +25,10 @@ minimal_value = checklist[0]
 minimal_index = 0
 for i in range(1, len(checklist)):
     if checklist[i] <= minimal_value:
+        #nuevo numero mas pequeno y su indice
         minimal_index = i
         minimal_value = checklist[i]
-
+#aqui cambiamos su valor
 checklist[minimal_index] = checklist[0]
 checklist[0] = minimal_value
 print(checklist)
