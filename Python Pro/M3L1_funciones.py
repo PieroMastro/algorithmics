@@ -23,3 +23,12 @@ b = int(input("Ingresa un número para b:"))
 more(a, b)
 
 #3. Ruta de turismo
+def route(x, y):
+    if y == 2:
+        print('¡Acertó!')
+    else:
+        print('¡Falló!')
+
+x = int(input("Ingrese la coordenada x: "))
+y = int(input("Ingrese la coordenada y: "))
+route(x, y)

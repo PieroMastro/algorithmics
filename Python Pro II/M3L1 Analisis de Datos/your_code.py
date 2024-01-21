@@ -13,7 +13,6 @@ print(df.tail())
 # ¿Qué tipo de datos se almacenan en cada una de las columnas?
 print(df.info())
 
-
 # Especifique la media aritmética y la mediana del tamaño de la aplicación (Tamaño)
 # ¿Cuánto cuesta la aplicación más cara?
 # * Especifique la media aritmética y la mediana del número de instalaciones de aplicaciones (Instalaciones)
