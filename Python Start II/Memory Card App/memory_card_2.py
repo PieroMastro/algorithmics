@@ -48,6 +48,8 @@ RadioGroupBox.setLayout(layout_ans1)
 AnsGroupBox = QGroupBox("Resultado de prueba")
 lb_Result = QLabel('¿Es correcto o no?') 
 lb_Correct = QLabel('¡Aquí estará la respuesta!')
+
+
 layout_res = QVBoxLayout()
 layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
 layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
