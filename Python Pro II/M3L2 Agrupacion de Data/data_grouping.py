@@ -20,7 +20,6 @@ print(everyone / everyone_10)
 
 print('--------------------------------------------')
 
-
 #¿Cuál es el tamaño promedio de aplicación para cada público objetivo?
 
 print(df.groupby(by = 'Content Rating')['Size'].mean())
