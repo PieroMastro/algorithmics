@@ -1,8 +1,10 @@
 import pandas as pd
 
 df = pd.read_csv ('Python Pro II/M3L1 Analisis de Datos/GoogleApps.csv')
+print(df.info())
 
-print(df[df['Rating']>4.9]) # Filtramos las apps con rating > 4.9
+install_mayor_49 = df[df['Rating']>4.9]['Installs'].mean()
+print(install_mayor_49) # Filtramos las apps con rating > 4.9
 print('Número promedio de descargas (Installs) de apps con calificación (Rating) exceda el valor de 4.9:')
 print(df[df['Rating']>4.9]['Installs'].mean()) # Filtramos de nuevo por el parametro 'installs' y aplicamos la funcion mean() para determinar el promedio
 
