@@ -3,11 +3,11 @@ class Dish():
         self.name = name
         self.quantity = quantity
         self.price = price
-        self.dish = self.name + "(" + self.quantity + ")" + " - " + self.price
+        self.dish = f'{self.name} {self.quantity} - {self.price}'
     def get_dish_information(self):
         return self.dish
 
-class Menu:
+class Menu():
     def set_menu_information(self, name):
         self.name = name
         self.products = []
@@ -47,7 +47,7 @@ def menu_entry(name_menu):
 def menu_output(name_menu):
     name_menu.get_menu()
     for i in name_menu.products:
-        print(i.name + "(" + i.quantity + "g." +")" + " - " + i.price + "$")
+        print(f'{i.name} ({i.quantity}g.) - {i.price}$')
 
 def order_entry(name_menu):
     for i in range(question4):
@@ -57,7 +57,7 @@ def order_entry(name_menu):
                 check.set_order(j, j.price)
     check.get_order()
     for i in check.order:
-        print(i.name + "(" + i.quantity + "g." +")" + " - " + i.price + "$")
+        print(f'{i.name} ({i.quantity}g.) - {i.price}$')
     check.get_result()
     print(str(check.result) + "$")
 
@@ -67,8 +67,8 @@ dinner = Menu()
 check = Receipt()
 
 breakfast.set_menu_information("Desayunos")
-lunch.set_menu_information("Cenas")
-dinner.set_menu_information("Almuerzos")
+lunch.set_menu_information("Almuerzos")
+dinner.set_menu_information("Cenas")
 check.set_order_information("Hacer un pedido")
 
 print('''
