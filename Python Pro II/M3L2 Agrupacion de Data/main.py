@@ -42,13 +42,19 @@ print(data.reset_index())
 
 print('--------------------------------------------')
 
-print(df.pivot_table
-    (
+# pivot_table() < ------ Una nueva tabla con parametros definidos
+table = df.pivot_table(
         columns = 'Type', 
         index = 'Content Rating', 
         values = 'Size', 
         aggfunc = ['min', 'max']
-    ))
+    )
+
+print(table)
+
+print('--------------------------------------------')
+
+print(pd.isnull(df))
 
 
 
