@@ -6,7 +6,7 @@ with open(demo, 'r', encoding='utf-8') as file:
 
 author = input('¿Quién escribió el poema?: ')
 with open(demo, 'a', encoding='utf-8') as file:
-    file.write(f'({author})\n')
+    file.write(f'\n({author})')
 
 while True:
     question = input('¿Quieres agregar otro poema?: ')

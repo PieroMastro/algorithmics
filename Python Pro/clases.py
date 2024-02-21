@@ -67,3 +67,4 @@ warrior.print_info()
 enemy = Hero('Bandido', 50, 10, 5, 'Daga')
 
 warrior.strike(enemy)
+
