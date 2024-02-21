@@ -1,9 +1,19 @@
-import pygame
-#from pygame import *
+from pygame import *
 
-pygame.init()
+SCREEN_HEIGHT = 800
+SCREEN_WIDTH = 600
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+init()
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+window = display.set_mode((SCREEN_HEIGHT, SCREEN_WIDTH))
+display.set_caption('Demo')
+
+run = True
+while run:
+    time.delay(50)
+    for e in event.get():
+        if e.type == QUIT:
+            run = False
+
+    display.update
+quit()
