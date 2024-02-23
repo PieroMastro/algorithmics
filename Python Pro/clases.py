@@ -96,9 +96,9 @@ class Character:
             damage = 0
         enemy.health -= damage
         if enemy.health <= 0:
-            print(f'- {enemy.name} ha muerto. \nLa batalla ha finalizado, nuestro grupo ha salido victorioso!')
+            print(f'- El {enemy.name} ha muerto. \nLa batalla ha finalizado, nuestro grupo ha salido victorioso!')
         else:
-            print(f'- {enemy.name} tiene {enemy.health} puntos de vida restantes.')
+            print(f'- El {enemy.name} tiene {enemy.health} puntos de vida restantes.')
 
 class Warrior(Character):
     def __init__(self, name, health, armor, power, weapon):

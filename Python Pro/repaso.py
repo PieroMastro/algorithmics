@@ -36,16 +36,31 @@
 # # División entera: devuelve el cociente entero de la división de dos números
 # cociente_entero = 7 // 3 # cociente_entero es 2
 
-# # Operadores condicionales:
 
-age = 1
+# CLASES, OBJETOS, HERENCIA:
 
-while age < 10:
-    age += 1
-    print(age)
+class Persona():
+    def __init__(self, nombre, apellido, edad):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.edad = edad
+
+    def mostrar_datos(self):
+        print(f'Hola, mi nombre es {self.nombre} {self.apellido} \nTengo {self.edad} años')
+
+nombre = input('Ingrese nombre:')
+apellido = input('Ingrese apellido:')
+edad = input('Ingrese edad:')
+
+persona = Persona(nombre, apellido, edad)
     
+print(persona.mostrar_datos())
 
- 
+
+
+
+
+
 
 
 
