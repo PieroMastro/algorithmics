@@ -1,3 +1,8 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#  VERSION 1.0                                              #
+#  CODIGO SIN CLASES (SOLO PARA REFERENCIA, NO IMPLEMENTAR) #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 from pygame import *
 
 # Main Window:

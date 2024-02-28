@@ -1,3 +1,8 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#  VERSION 2.0                                              #
+#  CODIGO CON CLASES SIMPLES (SIN HERENCIA)                 #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 from pygame import *
 
 #clase del jugador principal
