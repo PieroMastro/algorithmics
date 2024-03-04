@@ -5,20 +5,20 @@
 
 from pygame import *
 
-#clase del jugador principal
+# clase del jugador principal
 class Player():
     # Constructor de clase
     def __init__(self, player_image, player_x, player_y, player_speed):
-    
         # Cada objeto debe almacenar la propiedad image
         self.image = transform.scale(image.load(player_image), (80, 80))
         self.speed = player_speed
         self.x = player_x
         self.y = player_y
+
     # Método para dibujar el personaje en la ventana
     def reset(self):
         window.blit(self.image, (self.x, self.y))
- 
+
     # Método que implementa el control de objetos usando los botones de las flechas del teclado
     def update(self):
         keys = key.get_pressed()
@@ -41,24 +41,26 @@ class GameSprite():
         self.speed = player_speed
         self.x = player_x
         self.y = player_y
-   # Método para dibujar el personaje en la ventana
+
+    # Método para dibujar el personaje en la ventana
     def reset(self):
         window.blit(self.image, (self.x, self.y))
- 
+
 # Clase del objeto del enemigo    
 class Enemy():
     side = "left"
     # Constructor de clase
     def __init__(self, player_image, player_x, player_y, player_speed):
- 
         # Cada objeto debe almacenar la propiedad image
         self.image = transform.scale(image.load(player_image), (80, 80))
         self.speed = player_speed
         self.x = player_x
         self.y = player_y
+
     # Método para dibujar el personaje en la ventana
     def reset(self):
         window.blit(self.image, (self.x, self.y))
+        
     # Movimiento del enemigo
     def update(self):
         if self.x <= 410:
@@ -69,7 +71,7 @@ class Enemy():
             self.x -= self.speed
         else:
             self.x += self.speed
- 
+
 # Clase del elemento de la pared
 class Wall():
     def __init__(self, color_1, color_2, color_3, wall_x, wall_y, wall_width, wall_height):
@@ -86,7 +88,7 @@ class Wall():
         # Cada objeto debe almacenar la propiedad rect (rectángulo)
         self.rect = self.image.get_rect()
         self.rect = Rect(wall_x, wall_y, wall_width, wall_height)
- 
+
     def draw_wall(self):
         draw.rect(window, (self.color_1, self.color_2, self.color_3), (self.rect.x, self.rect.y, self.width, self.height))
 
@@ -131,7 +133,7 @@ while run:
         # Ejecuta el movimiento del objeto:
         pacman.update()
         monster.update()
- 
+
         # Los actualiza en una nueva ubicación con cada iteración del ciclo:
         pacman.reset()
         monster.reset()

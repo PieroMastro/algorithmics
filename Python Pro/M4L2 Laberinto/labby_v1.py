@@ -29,7 +29,7 @@ wall_width = 300
 wall_height = 10
 wall_x = SCREEN_WIDTH / 2 - SCREEN_WIDTH / 3
 wall_y = SCREEN_HEIGHT / 2
- 
+
 image_final = transform.scale(image.load('pac.png'), (80, 80))
 rect_final = image_final.get_rect()
 rect.x_final = SCREEN_WIDTH - 85
