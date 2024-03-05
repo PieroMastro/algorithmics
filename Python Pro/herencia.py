@@ -14,10 +14,28 @@ class Warrior(Character):
 
     def attack(self):
         return super().attack() + 'with axes'
+    
+class Mage(Character):
+    def __init__(self, name, health, magic):
+        super().__init__(name, health)
+        self.magic = magic
+        
+    def attack(self):
+        return super().attack() + 'with Magic'
+    
+    def fireball(self):
+        return 'Throw a fireball'
 
 carlitos = Warrior('Carlitos', 100, 40)
+pepe = Mage('Pepe', 50, 80)
 
 print('Heroe creado:')
 print(f'Warrior: {carlitos.name}\nHealth: {carlitos.health}\nStrength: {carlitos.strength}')
 print(f'{carlitos.name} {carlitos.attack()}')
+print('=================================')
+
+print('Heroe creado:')
+print(f'Mage: {pepe.name}\nHealth: {pepe.health}\nMagic: {pepe.magic}')
+print(f'{pepe.name} {pepe.attack()}')
+print(f'{pepe.name} {pepe.fireball()}')
 
