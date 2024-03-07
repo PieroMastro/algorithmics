@@ -41,7 +41,7 @@ class Enemy(GameSprite):
         if self.side == "right":
             self.rect.x += self.sonic
         else:
-            self.side.x -= self.sonic
+            self.rect.x -= self.sonic
 
 class Wall(sprite.Sprite):
     def __init__(self, color_1, color_2, color_3, wall_x, wall_y, wall_width, wall_height):
@@ -77,7 +77,7 @@ while playmomento:
     if not finito:
         window.fill((0,255,0))
         wall_1.draw_wall()
-        rat.reset()
 
     display.update()
+
 quit()
