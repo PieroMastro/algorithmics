@@ -1,10 +1,9 @@
 import pandas as pd
 
 # 1. Cargar data
-df = pd.read_csv('Python Pro II/M4L1 Machine Learning/titanic.csv')
+df = pd.read_csv('titanic.csv')
 print(df.info())
 print(df.head())
-
 
 # 2. Limpiar los datos
 df.drop(['PassengerId', 'Name', 'Ticket', 'Cabin'], axis = 1, inplace = True)
@@ -32,7 +31,6 @@ def fill_sex(sex):
     return 0
 
 df['Sex'] = df['Sex'].apply(fill_sex)
-
 
 # 3. Creando un modelo
 from sklearn.model_selection import train_test_split

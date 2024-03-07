@@ -15,5 +15,6 @@ while run:
         if e.type == QUIT:
             run = False
 
-    display.update
+    display.update()
+    
 quit()
