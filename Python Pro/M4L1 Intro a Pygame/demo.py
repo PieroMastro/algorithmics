@@ -5,12 +5,13 @@
 
 from pygame import *
 
+# Inicialización de Pygame
+init()
+
+# Definir constantes
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SPEED = 20
-
-# Inicialización de Pygame
-init()
 
 # Crear la ventana
 window = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))

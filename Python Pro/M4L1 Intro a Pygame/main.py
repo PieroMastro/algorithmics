@@ -1,9 +1,9 @@
 from pygame import *
 
+init()
+
 SCREEN_HEIGHT = 800
 SCREEN_WIDTH = 600
-
-init()
 
 window = display.set_mode((SCREEN_HEIGHT, SCREEN_WIDTH))
 display.set_caption('Demo')
