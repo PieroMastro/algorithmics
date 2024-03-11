@@ -2,7 +2,7 @@ print('''
 Este es un juego de misiones, para superarlo debes elegir entre múltiples respuestas.
 ¡Ten cuidado y buena suerte!
 ''')
- 
+
 print('''
 Para seleccionar una respuesta, elige la letra correspondiente
 ''')
