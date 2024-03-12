@@ -133,9 +133,55 @@ def add_tag():
         tag = field_tag.text()
         if not tag in notes[key]['etiquetas']:
             notes[key]['etiquetas'].append(tag)
+            list_tags.addItem(tag)
             field_tag.clear()
         with open('notes_data.json', 'w', encoding= 'utf-8') as file:
             json.dump(notes, file, sort_keys= True, ensure_ascii= False)
+        print(notes)
+    else:
+        print('Debe seleccionar una nota para agregar una etiqueta!')
+
+def del_tag():
+    if list_tags.selectedItems():
+        key = list_notes.selectedItems()[0].text()
+        tag = list_tags.selectedItems()[0].text()
+        notes[key]['etiquetas'].remove(tag)
+        list_tags.clear()
+        list_tags.addItems(notes[key]['etiquetas'])
+        with open('notes_data.json', 'w') as file:
+            json.dump(notes, file, sort_keys= True, ensure_ascii= False)
+    else:
+        print('La etiqueta a eliminar no ha sido seleccionada')
+
+def search_tag():
+    print(button_search.text())
+
+    tag = field_tag.text()
+
+    if button_search.text() == 'Buscar notas por etiqueta' and tag:
+        print(tag)
+        # las notas con la etiqueta resaltada se amacenan aqui:
+        notes_filtered = {}
+
+        for note in notes:
+            if tag in notes[note]['etiquetas']:
+                notes_filtered[note] = notes[note]
+        
+        button_search.setText('Restablecer busqueda')
+        list_notes.clear()
+        list_tags.clear()
+        list_notes.addItems(notes_filtered)
+        print(button_search.text())
+    
+    elif button_search.text() == 'Restablecer busqueda':
+        field_tag.clear()
+        list_notes.clear()
+        list_tags.clear()
+        list_notes.addItems(notes)
+        button_search.setText("Buscar notas por etiqueta")
+        print(button_search.text())
+    else:
+        pass
 
 
 # manejo de eventos:
@@ -143,6 +189,9 @@ list_notes.itemClicked.connect(show_note)
 create_note_btn.clicked.connect(add_note)
 save_note_btn.clicked.connect(save_note)
 delete_note_btn.clicked.connect(del_note)
+button_add.clicked.connect(add_tag)
+button_del.clicked.connect(del_tag)
+button_search.clicked.connect(search_tag)
 
 # 4. Ejecutando la app:
 main_window.show()
