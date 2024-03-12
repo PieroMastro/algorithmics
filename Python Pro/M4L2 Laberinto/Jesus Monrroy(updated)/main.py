@@ -1,4 +1,5 @@
 from pygame import *
+from pygame.locals import *
 
 screen_height = 1080
 screen_width = 680
@@ -10,7 +11,7 @@ display.set_caption('Ball maze')
 
 class GameSprite(sprite.Sprite):
     def __init__(self, play_mage, play_x, play_y, play_sonic):
-        super().__init__() # Eliminar self como argumento
+        sprite.Sprite().__init__()
         self.mage = transform.scale(image.load(play_mage), (80, 80))
         self.sonic = play_sonic
         self.rect = self.mage.get_rect()
@@ -21,14 +22,14 @@ class GameSprite(sprite.Sprite):
 
 class Character(GameSprite):
     def update(self):
-        keys = key.get_pressed()
+        keys = key.get_pressed() # keys = key.get_pressed() y modificar los condicionales
         if keys[K_a] and self.rect.x > 5:
             self.rect.x -= self.sonic
         if keys[K_d] and self.rect.x < screen_width - 80:
             self.rect.x += self.sonic
         if keys[K_w] and self.rect.y > 5:
             self.rect.y -= self.sonic
-        if keys[K_s] and self.rect.y > screen_width - 80:
+        if keys[K_s] and self.rect.y > screen_height - 80: # screen_height 
             self.rect.y += self.sonic
 
 class Enemy(GameSprite):
@@ -41,7 +42,7 @@ class Enemy(GameSprite):
         if self.side == "right":
             self.rect.x += self.sonic
         else:
-            self.rect.x -= self.sonic
+            self.rect.x -= self.sonic # self.rect.x -= self.sonic
 
 class Wall(sprite.Sprite):
     def __init__(self, color_1, color_2, color_3, wall_x, wall_y, wall_width, wall_height):
@@ -68,16 +69,23 @@ cheese = GameSprite('cheese.png', screen_width - 85, screen_height - 100, 0)
 finito = False
 playmomento = True
 while playmomento:
-    time.delay(100)
-    
+    time.delay(60)
     for e in event.get():
         if e.type == QUIT:
             playmomento = False
 
     if not finito:
-        window.fill((0,255,0))
+        window.fill((255, 255, 255))
+
         wall_1.draw_wall()
+        wall_2.draw_wall()
 
-    display.update()
+        rat.update() # parentesis luego de accesar a los metodos
+        borg.update() # parentesis luego de accesar a los metodos
 
+        rat.reset() # parentesis luego de accesar a los metodos
+        borg.reset() # parentesis luego de accesar a los metodos
+        cheese.reset() # parentesis luego de accesar a los metodos
+
+    display.update() # parentesis luego de accesar a los metodos
 quit()
