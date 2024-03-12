@@ -1,5 +1,4 @@
 from pygame import *
-from pygame.locals import *
 
 screen_height = 1080
 screen_width = 680
