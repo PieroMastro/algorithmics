@@ -1,11 +1,11 @@
 from pygame import *
 
-screen_height = 1080
-screen_width = 680
+screen_width = 1080 # DEFINIR PRIMERO WIDTH, LUEGO HEIGHT
+screen_height = 680
 
 init()
 
-window = display.set_mode((screen_height, screen_width))
+window = display.set_mode((screen_width, screen_height))
 display.set_caption('Ball maze')
 
 class GameSprite(sprite.Sprite):
@@ -21,14 +21,14 @@ class GameSprite(sprite.Sprite):
 
 class Character(GameSprite):
     def update(self):
-        keys = key.get_pressed() # keys = key.get_pressed() y modificar los condicionales
+        keys = key.get_pressed()
         if keys[K_a] and self.rect.x > 5:
             self.rect.x -= self.sonic
         if keys[K_d] and self.rect.x < screen_width - 80:
             self.rect.x += self.sonic
         if keys[K_w] and self.rect.y > 5:
             self.rect.y -= self.sonic
-        if keys[K_s] and self.rect.y > screen_height - 80: # screen_height 
+        if keys[K_s] and self.rect.y < screen_height - 80: # LA LOGICA ESTABA INVERTIDA (CAMBIADO '<' EN LUGAR DE '>')
             self.rect.y += self.sonic
 
 class Enemy(GameSprite):
@@ -41,7 +41,7 @@ class Enemy(GameSprite):
         if self.side == "right":
             self.rect.x += self.sonic
         else:
-            self.rect.x -= self.sonic # self.rect.x -= self.sonic
+            self.rect.x -= self.sonic
 
 class Wall(sprite.Sprite):
     def __init__(self, color_1, color_2, color_3, wall_x, wall_y, wall_width, wall_height):
@@ -57,34 +57,35 @@ class Wall(sprite.Sprite):
         self.rect = Rect(wall_x, wall_y, wall_width, wall_height)
     def draw_wall(self):
         draw.rect(window, (self.color_1, self.color_2, self.color_3), (self.rect.x, self.rect.y, self.wall_width, self.wall_height))
+        
+# REEMPLAZAR SCREEN_WIDTH Y HEIGHT RESPECTIVAMENTE PARA QUE SE CORRESPONDA CON LA CONSTANTE
+wall_1 = Wall(255, 255, 255, screen_height / 2 - screen_height / 3, screen_width / 2, 300, 10)
+wall_2 = Wall(255, 255, 255, 410, screen_height / 2 - screen_height / 4, 10, 350) #
 
-wall_1 = Wall(0, 0, 0, screen_width / 2 - screen_width / 3, screen_height / 2, 300, 10)
-wall_2 = Wall(0, 0, 0, 410, screen_width / 2 - screen_width / 4, 10, 350)
-
-rat = Character('rat.png', 5, screen_height, 8)
+rat = Character('rat.png', 5, screen_height - 80, 9) # LA INSTANCIA AHORA SI FUNCIONA
 borg = Enemy('cyborg.png', screen_width - 80, 200, 9)
 cheese = GameSprite('cheese.png', screen_width - 85, screen_height - 100, 0)
 
 finito = False
 playmomento = True
 while playmomento:
-    time.delay(60)
+    time.delay(30)
     for e in event.get():
         if e.type == QUIT:
             playmomento = False
 
     if not finito:
-        window.fill((255, 255, 255))
+        window.fill((0, 0, 0))
 
         wall_1.draw_wall()
         wall_2.draw_wall()
 
-        rat.update() # parentesis luego de accesar a los metodos
-        borg.update() # parentesis luego de accesar a los metodos
+        rat.update()
+        borg.update()
 
-        rat.reset() # parentesis luego de accesar a los metodos
-        borg.reset() # parentesis luego de accesar a los metodos
-        cheese.reset() # parentesis luego de accesar a los metodos
+        rat.reset()
+        borg.reset()
+        cheese.reset()
 
-    display.update() # parentesis luego de accesar a los metodos
+    display.update()
 quit()
