@@ -1,7 +1,6 @@
 key_switch_camera = 'c' # la cámara está ligada al héroe o no
 key_switch_mode = 'z' # puede atravesar obstáculos o no
 
-
 key_forward = 'w' # avanzar (la dirección a la que apunta la cámara)
 key_back = 's' # retroceder
 key_left = 'a' # caminar a la izquierda (de lado a la cámara)
@@ -20,7 +19,7 @@ class Hero():
     def __init__(self, pos, land):
         self.land = land
         self.mode = True # modo para atravesar todo
-        self.hero = loader.loadModel('smiley')
+        self.hero = loader.loadModel('smiley.egg')
         self.hero.setColor(1, 0.5, 0)
         self.hero.setScale(0.3)
         self.hero.setH(180)
@@ -65,11 +64,9 @@ class Hero():
         '''devuelve las coordenadas a las que se desplaza el héroe en el punto (x, y)
         si caminan hacia un ángulo'''
 
-
         x_from = round(self.hero.getX())
         y_from = round(self.hero.getY())
         z_from = round(self.hero.getZ())
-
 
         dx, dy = self.check_dir(angle)
         x_to = x_from + dx
@@ -195,8 +192,7 @@ class Hero():
         base.accept(key_turn_left + '-repeat', self.turn_left)
         base.accept(key_turn_right, self.turn_right)
         base.accept(key_turn_right + '-repeat', self.turn_right)
-
-
+        
         base.accept(key_forward, self.forward)
         base.accept(key_forward + '-repeat', self.forward)
         base.accept(key_back, self.back)
@@ -206,18 +202,14 @@ class Hero():
         base.accept(key_right, self.right)
         base.accept(key_right + '-repeat', self.right)
 
-
         base.accept(key_switch_camera, self.changeView)
 
-
         base.accept(key_switch_mode, self.changeMode)
-
 
         base.accept(key_up, self.up)
         base.accept(key_up + '-repeat', self.up)
         base.accept(key_down, self.down)
         base.accept(key_down + '-repeat', self.down)
-
 
         base.accept(key_build, self.build)
         base.accept(key_destroy, self.destroy)
