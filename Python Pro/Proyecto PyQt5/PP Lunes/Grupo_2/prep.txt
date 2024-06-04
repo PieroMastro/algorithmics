@@ -1,0 +1,17 @@
+
+JUEGO DE MEMORIA
+
+1. Interfaz:
+    - Menu (jugar/salir)
+    - Main Win:
+        - 4 botones con informacion
+        - 1 boton para determinar si la coincidencia
+
+
+2. Funcionalidad:
+    - Text based
+    - botones de radio
+    - rand in para aleatoridad
+    - utilizar listas  para almacenar la data e iterar y seleccionar aleateriamente
+    - mostar al usuario con cada seleccion la respuesta correcta y preguntar si vaa jugar de nuevo
+
