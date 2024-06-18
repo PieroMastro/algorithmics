@@ -1,6 +1,8 @@
+### WORK IN PROGRESS ###
 
 from pygame import *
 from random import randint
+from time import time as timer #Importar la función temporizadora para que el intérprete no necesite buscar esta función en el módulo time de pygame, necesitamos darle un nombre diferente
 
 init()
 
@@ -10,33 +12,37 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (230, 0, 0)
 CYAN = (0, 255, 255)
+YELLOW = (252, 186, 3)
 BACKGROUND_MUSIC = 'space.ogg'
 SHOOT_FX = 'fire.ogg'
 BACKGROUND_IMG = 'galaxy.jpg'
 PLAYER_IMG = 'rocket.png'
 ENEMY_IMG = 'ufo.png'
+ASTEROID_IMG = 'asteroid.png'
 BULLET_IMG = 'bullet.png'
-MUSIC = 'space.ogg'
 FPS = 60
+
+# Loading/setting up fonts
+font.init()
+
+font1 = font.SysFont('Arial', 80)
+you_win = font1.render('VICTORY', True, CYAN)
+game_over = font1.render('GAME OVER', True, RED)
+
+font2 = font.SysFont('Arial', 40)
 
 # Main Window
 window = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 display.set_caption('Project Shooter Python Start II')
 background = transform.scale(image.load(BACKGROUND_IMG), (SCREEN_WIDTH, SCREEN_HEIGHT))
 
-# Game Music
+# Game Sound
 mixer.init()
 mixer.music.load(BACKGROUND_MUSIC)
 mixer.music.play()
 
 fire_sound = mixer.Sound(SHOOT_FX)
 
-# Game functionality
-font.init()
-font = font.Font(None, 40)
-score = 0
-win_score = 10
-lost = 0
 
 # Main Class
 class GameSprite(sprite.Sprite):
@@ -78,7 +84,7 @@ class Enemy(GameSprite):
         if self.rect.y >= SCREEN_HEIGHT:
             self.rect.y = 0
             self.rect.x = randint(0, SCREEN_WIDTH - self.width)
-            self.speed = randint(1, 4)
+            self.speed = randint(1, 3)
             lost += 1
 
 
@@ -94,11 +100,25 @@ class Bullet(GameSprite):
 player = Player(PLAYER_IMG, (SCREEN_WIDTH - 65) // 2, SCREEN_HEIGHT - 80, 65,65, 5)
 
 monsters = sprite.Group()
-for enemy in range(5):
-    enemy = Enemy(ENEMY_IMG, randint(0, SCREEN_WIDTH - 80), 0, 80, 50, randint(1, 4))
+for enemy in range(1, 6):
+    enemy = Enemy(ENEMY_IMG, randint(0, SCREEN_WIDTH - 80), 0, 80, 50, randint(1, 3))
     monsters.add(enemy)
 
 bullets = sprite.Group()
+
+asteroids = sprite.Group()
+for i in range(1, 3):
+    asteroid = Enemy(ASTEROID_IMG, randint(30, SCREEN_WIDTH - 30), -40, 80, 50, randint(1, 7))
+    asteroids.add(asteroid)
+
+
+# Game Functionality
+score = 0 # Enemies destroyed
+win_score = 20 # Enemies needed to win
+lost = 0 # Enemies missed
+shoots_fired = 0 # Variable to keep track of shoots
+reload_time = False # Flag to restart the fire method
+
 
 # Main Game
 run = True
@@ -113,12 +133,18 @@ while run:
             
         elif e.type == KEYDOWN:
             if e.key == K_SPACE:
-                player.fire()
+                if shoots_fired < 5 and reload_time == False:
+                    shoots_fired += 1
+                    player.fire()
+                    
+                if shoots_fired >= 5 and reload_time == False:
+                    last_time = timer()
+                    reload_time = True
 
     if not finish:
         window.blit(background, (0, 0))
-        score_text = font.render(f'Score: {score}', 1, WHITE)
-        lost_text = font.render(f'Lost: {lost}', 1, WHITE)
+        score_text = font2.render(f'Score: {score}', 1, WHITE)
+        lost_text = font2.render(f'Lost: {lost}', 1, WHITE)
         window.blit(score_text, (20, 20))
         window.blit(lost_text, (20, 60))
 
@@ -129,7 +155,21 @@ while run:
         bullets.update()
 
         monsters.draw(window)
+        asteroids.draw(window)
         monsters.update()
+        asteroids.update()
+        
+        # Reloading
+        if reload_time:
+            now_time = timer()
+            
+            if now_time - last_time < 2:
+                reload = font2.render('Reloading...', 1, YELLOW)
+                window.blit(reload, (260, 400))
+
+            else:
+                shoots_fired = 0
+                reload_time = False
         
         collisions = sprite.groupcollide(monsters, bullets, True, True)
         
@@ -142,14 +182,12 @@ while run:
             finish = True
             window.fill(BLACK)
             mixer.music.stop()
-            game_over = font.render('GAME OVER', 1, RED)
             window.blit(game_over, (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2))
             
         if score == win_score:
             finish = True
             window.fill(BLACK)
             mixer.music.stop()
-            you_win = font.render('VICTORY', 1, CYAN)
             window.blit(you_win, (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2))
 
 
