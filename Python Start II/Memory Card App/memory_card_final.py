@@ -8,7 +8,7 @@ from random import randint, shuffle
 
 
 class Question():
-    "contiene una pregunta, una respuesta correcta y tres incorrectas"
+    # contiene una pregunta, una respuesta correcta y tres incorrectas
 
     def __init__(self, question, right_answer, wrong1, wrong2, wrong3):
         self.question = question
@@ -29,6 +29,10 @@ questions_list.append(
     Question('¿Cuál de los siguientes no es un Pokemon?', 'Bumblebee', 'Charizard', 'Pikachu', 'Ditto'))
 questions_list.append(
     Question('¿Cuantos continentes existen?', '7', '6', '5', '4'))
+questions_list.append(
+    Question('¿Cuál de los siguientes no es un peleador de Street Fighter?', 'Kyo', 'Ken', 'Vega', 'Urien'))
+questions_list.append(
+    Question('¿Cuál animal tiene más de un corazón?', 'Pulpo', 'Lemur', 'Caracol', 'Cangrejo'))
 
 
 app = QApplication([])
@@ -93,7 +97,6 @@ layout_line3.addWidget(btn_OK, stretch=2)  # el botón debe ser grande
 
 
 layout_line3.addStretch(1)
-
 
 layout_card = QVBoxLayout()
 
