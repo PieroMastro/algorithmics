@@ -14,7 +14,7 @@ def end_quiz():
 def quiz_form():
     # la función obtiene una lista de cuestionarios de la base de datos y crea un formulario con una lista desplegable
 
-    html_beg = f"""<html><body><h2>Elija un cuestionario:</h2><form method="post" action="index"><select name="quiz">"""
+    html_beg = f"""<html><body><h2>Elija un cuestionario:</h2><form method="POST" action="index"><select name="quiz">"""
     
     frm_submit = f"""<p><input type="submit" value="Seleccionar"> </p>"""
     
