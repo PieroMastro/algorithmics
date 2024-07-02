@@ -61,7 +61,7 @@ def test():
 
     
 def result():
-    return "Cuestionario completado!"
+    return "<h2>Cuestionario completado!</h2>"
 
 # Crear un objeto de aplicación web:
 app = Flask(__name__) 
