@@ -19,7 +19,7 @@ def do(query):
     conn.commit()
  
 def clear_db():
-    # Elimina todas las tablas
+    '''mata todas las tablas'''
     open()
     query = '''DROP TABLE IF EXISTS quiz_content'''
     do(query)
@@ -82,9 +82,9 @@ def add_questions():
  
 def add_quiz():
     quizes = [
-        ('¿Quién quiere ser millonario?', ),
-        ('El más inteligente', ),
-        ('No se que elegir', )
+        ('Quiz 1', ),
+        ('Quiz 2', ),
+        ('Quiz- no se que elegir', )
     ]
     open()
     cursor.executemany('''INSERT INTO quiz (name) VALUES (?)''', quizes)
@@ -106,7 +106,8 @@ def add_links():
  
  
 def get_question_after(last_id=0, vict_id=1):
-    # devuelve la siguiente pregunta después de la pregunta con el ID pasado para la primera pregunta, se pasa el valor predeterminado
+    '''devuelve la siguiente pregunta después de la pregunta con el ID pasado
+    para la primera pregunta, se pasa el valor predeterminado'''
     open()
     query = '''
     SELECT quiz_content.id, question.question, question.answer, question.wrong1, question.wrong2, question.wrong3
@@ -121,23 +122,22 @@ def get_question_after(last_id=0, vict_id=1):
     return result 
  
 def get_quizzes():
-    # devuelve una lista de cuestionarios (id, name), solo puede tomar cuestionarios en donde hay preguntas
+    '''devuelve una lista de cuestionarios (id, name) 
+    solo puede tomar cuestionarios en donde hay preguntas, pero hasta ahora una simple opción'''
     query = 'SELECT * FROM quiz ORDER BY id'
     open()
     cursor.execute(query)
     result = cursor.fetchall()
     close()
     return result
-
 def get_quiz_count():
-    # Opcional
+    "' función opcional '"
     query = 'SELECT MAX(quiz_id) FROM quiz_content'
     open()
     cursor.execute(query)
     result = cursor.fetchone()
     close()
     return result
-
 def get_random_quiz_id():
     query = 'SELECT quiz_id FROM quiz_content'
     open()
@@ -147,7 +147,6 @@ def get_random_quiz_id():
     rand_id = ids[rand_num][0]
     close()
     return rand_id
-
 def main():
     clear_db()
     create()
