@@ -13,3 +13,23 @@ def get_result(score):
 
 score = int(input('Ingresar puntaje:'))
 print('Tu resultado:', get_result(score))
+
+
+# CALCULO DE RENDIMIENTO
+
+def control_rating(rating):
+   if 65 <= rating <= 100:
+       print('Rendimiento académico dentro de lo normal.')
+   else:
+       print('¡Rendimiento académico bajo!')
+ 
+
+def set_loop(num):
+    for i in range(num):
+        rating = int(input('Puntaje:'))
+        control_rating(rating)
+
+num_repeticiones = int(input('Ingrese el numero de calificaciones a consultar: '))
+
+set_loop(num_repeticiones)
+
