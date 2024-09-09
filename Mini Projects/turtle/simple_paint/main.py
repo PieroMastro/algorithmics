@@ -24,10 +24,26 @@ def set_instructions():
     hideturtle()
     exitonclick()
 
+
+# Nuevas funciones:
+
+def set_green():
+    t.color('green')
+
+def step_right():
+    t.goto(t.xcor() + 5, t.ycor())
+
+# Main 
 set_instructions()    
 
-scr = t.getscreen()
-scr.onscreenclick(move)
+display = t.getscreen()
+display.onscreenclick(move)
 
 t.ondrag(drag)
 
+# Implementacion de nuevas mecanicas
+display.listen()
+display.onkey(step_right, "right")
+display.onkey(set_green, "g")
+
+display.mainloop()
