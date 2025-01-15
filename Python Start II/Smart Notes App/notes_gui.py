@@ -1,34 +1,32 @@
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QApplication, QWidget, QHBoxLayout, QVBoxLayout,
-    QGroupBox, QButtonGroup, QRadioButton, QPushButton,
-    QLabel, QListWidget, QLineEdit, QTextEdit, QInputDialog, QFormLayout)
-    # importar nuevos metodos: QListWidget, QLineEdit, QTextEdit, QInputDialog, QFormLayout
+from PyQt5.QtWidgets import (QApplication, QWidget, QHBoxLayout, QVBoxLayout, 
+                            QPushButton, QLabel, QListWidget, QLineEdit, QTextEdit)
+                            # importar nuevos metodos: QListWidget, QLineEdit, QTextEdit
 
 app = QApplication([])
 
 #INTERFAZ DE LA APP
 # 1. Parametros de la app:
 main_window = QWidget()
-main_window.setWindowTitle('Notas inteligentes')
+main_window.setWindowTitle('App de Notas Inteligentes')
 main_window.resize(900, 600)
 
 # 2. Creando los widgets:
 list_notes = QListWidget()
-list_notes_label = QLabel('Lista de notas')
-create_note_btn = QPushButton('Crear nota')
-delete_note_btn = QPushButton('Borrar nota')
-save_note_btn = QPushButton('Guardar nota')
+list_notes_label = QLabel('Lista de Notas')
+create_note_btn = QPushButton('Crear Nota')  # al presionarlo debe aparecer una ventana emergente con el campo "Ingresar nombre de Nota"
+delete_note_btn = QPushButton('Borrar Nota')
+save_note_btn = QPushButton('Guardar Nota')
 
 field_tag = QLineEdit('')
-field_tag.setPlaceholderText('Ingresar etiqueta...')
+field_tag.setPlaceholderText('Ingresar Etiqueta...')
 field_text = QTextEdit()
-button_add = QPushButton('Añadir nota')
-button_del = QPushButton('Remover etiqueta de nota')
-button_search = QPushButton('Buscar notas por etiqueta')
+button_add = QPushButton('Añadir Nota')
+button_del = QPushButton('Remover Etiqueta de Nota')
+button_search = QPushButton('Buscar Notas por Etiqueta')
 list_tags = QListWidget()
-list_tags_label = QLabel('Lista de etiquetas')
+list_tags_label = QLabel('Lista de Etiquetas')
 
 # 3. Organizando el diseño de los widgets:
 notes_layout = QHBoxLayout()
