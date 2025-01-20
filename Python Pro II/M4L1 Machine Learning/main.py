@@ -51,3 +51,13 @@ def replace_gender(gender):
 
 df["Sex"] = df['Sex'].apply(replace_gender)
 print(df.info())
+
+#3.2 Crear variables dummies para reeemplazar los valores categoricos
+print(pd.get_dummies(df['Embarked']))
+df[list(pd.get_dummies(df['Embarked']).columns)] = pd.get_dummies(df['Embarked'])
+df.drop('Embarked', axis=1, inplace=True)
+print(df.head())
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+
+
