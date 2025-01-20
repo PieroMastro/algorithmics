@@ -1,20 +1,37 @@
 import pandas as pd
 
-# 1. Cargar data
+# EXTRACCION
 df = pd.read_csv('titanic.csv')
-print(df.info())
-print(df.head())
+# print(df.info())
+# print(df.head())
 
-# 2. Limpiar los datos
-df.drop(['PassengerId', 'Name', 'Ticket', 'Cabin'], axis = 1, inplace = True)
-df['Embarked'].fillna('S', inplace = True)
-df.drop('Embarked', axis = 1, inplace = True)
+# COMPROBANDO HIPOTESIS
+print(df.groupby(by='Sex')['Survived'].mean())
 
+table = df.pivot_table(
+    index = 'Survived',
+    columns= 'Pclass',
+    values= 'Age',
+    aggfunc= 'mean'
+)
+print(table)
+
+# PREPARACION
+#1. Eliminar columnas que no tienen utilidad para nuestro modelo
+df.drop(['PassengerId', 'Name', 'Ticket', 'Cabin'], axis=1, inplace=True)
+
+#2. Reemplazar valores nulos
+#2.1 Puerto de embarque
+print(df['Embarked'].value_counts())
+df['Embarked'].fillna('S', inplace=True)
+
+#2.2 Edad
+print(df.groupby(by='Pclass')['Age'].median())
 age_1 = df[df['Pclass'] == 1]['Age'].median()
 age_2 = df[df['Pclass'] == 2]['Age'].median()
 age_3 = df[df['Pclass'] == 3]['Age'].median()
 
-def fill_age(row):
+def replace_age(row):
     if pd.isnull(row['Age']):
         if row['Pclass'] == 1:
             return age_1
@@ -23,33 +40,14 @@ def fill_age(row):
         return age_3
     return row['Age']
 
-df['Age'] = df.apply(fill_age, axis = 1)
+df['Age'] = df.apply(replace_age, axis=1)
 
-def fill_sex(sex):
-    if sex == 'male':
+#3. Conversion de objetos a datos numericos
+#3.1 Genero
+def replace_gender(gender):
+    if gender == 'male':
         return 1
     return 0
 
-df['Sex'] = df['Sex'].apply(fill_sex)
-
-# 3. Creando un modelo
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import confusion_matrix, accuracy_score
-
-X = df.drop('Survived', axis = 1)
-y = df['Survived']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25)
-
-sc = StandardScaler()
-X_train = sc.fit_transform(X_train)
-X_test = sc.transform(X_test)
-
-classifier = KNeighborsClassifier(n_neighbors = 5)
-classifier.fit(X_train, y_train)
-
-y_pred = classifier.predict(X_test)
-print('Porcentaje de resultados predichos correctamente:', accuracy_score(y_test, y_pred) * 100)
-print('Confusion matrix:')
-print(confusion_matrix(y_test, y_pred))
+df["Sex"] = df['Sex'].apply(replace_gender)
+print(df.info())
