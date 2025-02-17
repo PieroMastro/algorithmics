@@ -74,7 +74,7 @@ Las siguientes acciones están disponibles en él:
     3 - Hacer un pedido
     0 - Finalizar el programa
     
-Para hacer algo, ingrese los números.
+Para hacer algo, ingrese el número correspondiente.
 ''')
 
     menu = Menu("Restaurant Menu")
