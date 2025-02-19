@@ -75,6 +75,7 @@ class ImageProcessor():
 
 # Creando una instancia de la clase ImageProcessor
 work_img = ImageProcessor()
+curent_img = ImageProcessor()
 
 # seleccionando el directorio
 def choose_workdir():
@@ -100,14 +101,15 @@ def show_filenames_list():
         files_list.addItem(filename)
 
 # seleccionar las imagenes
-def show_choosen_img():
-    if files_list.currentRow() >= 0:
-        filename = files_list.currentItem().text()
-        work_img.load_image(workdir, filename)
-        image_path = os.path.join(workdir, work_img.filename)
-        work_img.show_image(image_path)
+def show_chose_img():
+    if images_list.currentRow() >= 0:
+        filename = images_list.currentItem().text()
+        current_img.load_image(work_directory, filename)
+        image_path = os.path.join(work_directory, current_img.filename)
+        current_img.show_image(image_path)
 
 folder_btn.clicked.connect(show_filenames_list)
+images_list.currentRowChanged.connect(show_chose_img)
 files_list.clicked.connect(show_choosen_img)
 
 app.exec_()
