@@ -55,21 +55,21 @@ window.show()
 class ImageProcessor():
     def __init__(self):
         self.image = None
-        self.dir = None
         self.filename = None
-        self.save_dir = 'Modificado/'
-
-    def load_image(self, dir, filename):
-        self.dir = dir
+        self.directory = None
+        self.save_directory = 'modificado/'
+    
+    def load_image(self, directory, filename):
+        self.directory = directory
         self.filename = filename
-        image_path = os.path.join(dir, filename)
+        image_path = os.path.join(directory, filename)
         self.image = Image.open(image_path)
-        
+
     def show_image(self, path):
         img_label.hide()
         pixmap_img = QPixmap(path)
-        w, h = img_label.width(), img_label.height()
-        pixmap_img = pixmap_img.scaled(w, h, Qt.KeepAspectRatio)
+        width, height = img_label.width(), img_label. height()
+        pixmap_img = pixmap_img.scaled(width, height, Qt.KeepAspectRatio)
         img_label.setPixmap(pixmap_img)
         img_label.show()
 
