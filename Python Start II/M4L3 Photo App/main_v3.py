@@ -5,6 +5,40 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QHBoxLayout, QVBoxLayout,
 from PIL import Image, ImageFilter
 import os
 
+class ImageProcessor():
+    def __init__(self):
+        self.image = None
+        self.filename = None
+        self.directory = None
+        self.save_directory = 'modificado/'
+    
+    def load_image(self, directory, filename):
+        self.directory = directory
+        self.filename = filename
+        image_path = os.path.join(directory, filename)
+        self.image = Image.open(image_path)
+
+    def show_image(self, path):
+        pixmap_img = QPixmap(path)
+        width, height = img_label.width(), img_label.height()
+        pixmap_img = pixmap_img.scaled(width, height, Qt.KeepAspectRatio)
+        img_label.setPixmap(pixmap_img)
+        img_label.show()
+        
+    def change_to_bw(self):
+        if self.image:
+            self.image = self.image.convert('L')
+            self.save_image()
+            image_path = os.path.join(self.directory, self.save_directory, self.filename)
+            self.show_image(image_path)
+        
+    def save_image(self):
+        path = os.path.join(self.directory, self.save_directory)
+        if not os.path.exists(path):
+            os.mkdir(path)
+            
+        image_path = os.path.join(path, self.filename)
+        self.image.save(image_path)
 
 app = QApplication([])
 main_win = QWidget()
@@ -46,6 +80,7 @@ main_win.show()
 
 # APP LOGIC
 work_directory = ''
+current_img = ImageProcessor()
 
 def choose_work_directory():
     global work_directory
@@ -53,60 +88,20 @@ def choose_work_directory():
     print(f'Folder: {work_directory}')
 
 def filter(filenames, extensions):
-    result = list()
+    result = []
     for filename in filenames:
-        for extension in extensions:
-            if filename.endswith(extension):
+        for ext in extensions:
+            if filename.endswith(ext):
                 result.append(filename)
+                break # para salir del bucle interno si se encuentra una coincidencia
     return result
 
 def show_filenames_list():
     extensions = ['.jpg','.jpeg', '.png', '.gif', '.bmp']
-    choose_work_directory()
     filenames = filter(os.listdir(work_directory), extensions)
     images_list.clear()
     for pic in filenames:
         images_list.addItem(pic)
-
-directory_btn.clicked.connect(show_filenames_list)
-
-class ImageProcessor():
-    def __init__(self):
-        self.image = None
-        self.filename = None
-        self.directory = None
-        self.save_directory = 'modificado/'
-    
-    def load_image(self, directory, filename):
-        self.directory = directory
-        self.filename = filename
-        image_path = os.path.join(directory, filename)
-        self.image = Image.open(image_path)
-
-    def show_image(self, path):
-        img_label.hide()
-        pixmap_img = QPixmap(path)
-        width, height = img_label.width(), img_label. height()
-        pixmap_img = pixmap_img.scaled(width, height, Qt.KeepAspectRatio)
-        img_label.setPixmap(pixmap_img)
-        img_label.show()
-        
-    def change_to_bw(self):
-        self.image = self.image.convert('L')
-        self.save_image()
-        image_path = os.path.join(self.directory, self.save_directory, self.filename)
-        self.show_image(image_path)
-        
-    def save_image(self):
-        path = os.path.join(self.directory, self.save_directory)
-        if not os.path.exists(path) or os.path.isdir(path):
-            os.mkdir(path)
-            
-        image_path = os.path.join(path, self.filename)
-        self.image.save(image_path)
-
-
-current_img = ImageProcessor()
 
 def show_chose_img():
     if images_list.currentRow() >= 0:
@@ -114,6 +109,11 @@ def show_chose_img():
         current_img.load_image(work_directory, filename)
         image_path = os.path.join(work_directory, current_img.filename)
         current_img.show_image(image_path)
+
+
+# EVENT HANDLINg
+directory_btn.clicked.connect(choose_work_directory)
+directory_btn.clicked.connect(show_filenames_list)
 
 images_list.currentRowChanged.connect(show_chose_img)
 btn_bw.clicked.connect(current_img.change_to_bw)
