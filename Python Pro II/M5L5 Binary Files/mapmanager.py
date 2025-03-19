@@ -1,6 +1,7 @@
 import pickle
+from time import sleep
 
-class MapManager():
+class Mapmanager():
     """Gestión del mapa"""
     def __init__(self):
         self.model = 'block' # el modelo del cubo está en el archivo block.egg
@@ -13,62 +14,57 @@ class MapManager():
             (0.5, 0.3, 0.0, 1)
         ] #rgba
         # crea el nodo principal del mapa:
-        self.startNew()
-        # self.addBlock((0,10, 0))
+        self.start_new()
+        # self.add_block((0,10, 0))
 
 
-    def startNew(self):
+    def start_new(self):
         """crea la base para un nuevo mapa"""
         self .land = render.attachNewNode ( "Land" ) # el nodo al cual todos los bloques de mapa están vinculados
 
 
-    def getColor(self, z):
+    def get_color(self, z):
         if z < len(self.colors):
             return self.colors[z]
         else:
             return self.colors[len(self.colors) - 1]
 
 
-    def addBlock(self, position):
+    def add_block(self, position):
         # crear bloques de construcción
         self.block = loader.loadModel(self.model)
         self.block.setTexture(loader.loadTexture(self.texture))
         self.block.setPos(position)
-        self.color = self.getColor(int(position[2]))
+        self.color = self.get_color(int(position[2]))
         self.block.setColor(self.color)
-
         self.block.setTag("at", str(position))
-
         self.block.reparentTo(self.land)
 
 
-    def clear(self):
+    def clear_node(self):
         """restablece el mapa"""
         self.land.removeNode()
-        self.startNew()
+        self.start_new()
 
 
-    def loadLand(self, filename):
+    def load_land(self, filename):
         """crea un mapa de tierra desde un archivo de texto, devuelve sus dimensiones"""
-        self.clear()
+        self.clear_node()
         with open(filename) as file:
-            y = 0
-            for line in file:
-                x = 0
-                line = line.split(' ')
-                for z in line:
-                    for z0 in range(int(z)+1):
-                        block = self.addBlock((x, y, z0))
-                    x += 1
-                y += 1
-        return x,y
+            for y, row in enumerate(file):
+                row = map(int, row.split(' '))
+                for x, col in enumerate(row):
+                    height = col + 1
+                    for z in range(height):
+                        self.add_block((x, y, z))
+        return x, y
     
-    def findBlocks(self, pos):
+    def find_blocks(self, pos):
         return self.land.findAllMatches("=at=" + str(pos))
 
 
-    def isEmpty(self, pos):
-        blocks = self.findBlocks(pos)
+    def is_empty(self, pos):
+        blocks = self.find_blocks(pos)
         if blocks:
             return False
         else:
@@ -78,57 +74,53 @@ class MapManager():
     def findHighestEmpty(self, pos):
         x, y, z = pos
         z = 1
-        while not self.isEmpty((x, y, z)):
+        while not self.is_empty((x, y, z)):
             z += 1
         return (x, y, z)
 
 
-    def buildBlock(self, pos):
+    def build_block(self, pos):
         """Colocamos el bloque, considerando la gravedad:"""
         x, y, z = pos
         new = self.findHighestEmpty(pos)
         if new[2] <= z + 1:
-            self.addBlock(new)
+            self.add_block(new)
 
-
-    def delBlock(self, position):
+    def delete_block(self, position):
         """elimina bloques en la posición especificada""" 
-        blocks = self.findBlocks(position)
+        blocks = self.find_blocks(position)
         for block in blocks:
             block.removeNode()
 
-
-    def delBlockFrom(self, position):
+    def delete_block_from(self, position):
         x, y, z = self.findHighestEmpty(position)
         pos = x, y, z - 1
-        for block in self.findBlocks(pos):
+        for block in self.find_blocks(pos):
                 block.removeNode()
 
-    def saveMap(self):
-        '''Guarda todos los bloques en un archivo binario, y luego, devuelve una coleccion de nodos para todos los bloques existentes'''
+
+    def save_map(self):
         blocks = self.land.getChildren()
         # acceder a un archivo ninario para preservear
-        with open('my_map.dat', 'wb') as f:
+        with open('map.dat', 'wb') as data:
             # guardamos la cantidad e bloques al inicio del archivo binario
-            pickle.dump(len(blocks), f)
-
+            pickle.dump(len(blocks), data)
             # iterar todos los bloques de esa lista
             for block in blocks:
                 # determianmos la posiciond e cada bloque
                 x, y, z = block.getPos()
                 pos = (int(x), int(y), int(z))
                 # preservar la posicion
-                pickle.dump(pos, f)
+                pickle.dump(pos, data)
+        print('Mapa guardado!')
 
-    def loadMap(self):
-        # limpiar el mapa
-        self.clear()
-        # abrimos el archivo binario para lectura
-        with open('my_map.dat', 'rb') as fin:
-            # determinamos la cantidad de bloques
-            lenght = pickle.load(fin)
-            for i in range(lenght):
-                #determinamos la posicion
-                pos = pickle.load(fin)
-                # crearmos un nuevo bloque
-                self.addBlock(pos)
+    def load_map(self):
+        print('Cargando mapa...')
+        sleep(1)
+        self.clear_node()
+        with open('map.dat', 'rb') as data:
+            block_data = pickle.load(data)
+            for i in range(block_data):
+                pos = pickle.load(data)
+                self.add_block(pos)
+        print('Mapa Cargado!')
