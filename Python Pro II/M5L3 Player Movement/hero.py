@@ -33,6 +33,14 @@ class Hero():
         else:
             self.camera_free()
 
+    def change_mode(self):
+        if self.mode:
+            self.mode = False
+            print('Modo Jugador')
+        else:
+            self.mode = True
+            print('Modo Espectador')
+
     def turn_left(self):
         self.hero.setH((self.hero.getH() + 5) % 360)
 
@@ -99,14 +107,23 @@ class Hero():
     def right(self):
         angle = (self.hero.getH() + 270) % 360
         self.move_to(angle)
-    
+
+    def up(self):
+        self.hero.setZ((self.hero.getZ() + 1) % 360)
+
+    def down(self):
+        self.hero.setZ((self.hero.getZ() - 1) % 360)
+
 
     def accept_events(self):
         base.accept('c', self.switch_view)
+        base.accept('z', self.change_mode)
+
         base.accept('n', self.turn_left)
         base.accept('n-repeat', self.turn_left)
         base.accept('m', self.turn_right)
         base.accept('m-repeat', self.turn_right)
+
         base.accept('w', self.forward)
         base.accept('w-repeat', self.forward)
         base.accept('s', self.back)
@@ -115,4 +132,8 @@ class Hero():
         base.accept('a-repeat', self.left)
         base.accept('d', self.right)
         base.accept('d-repeat', self.right)
+
+
+
+
 
