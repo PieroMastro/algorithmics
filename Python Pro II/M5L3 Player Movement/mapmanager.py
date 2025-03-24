@@ -1,12 +1,14 @@
 from random import random
 
+colors = []
+
 # generate_colors = lambda: [
 #     (round(random(), 3), round(random(), 3), round(random(), 3), 1)
 #     for _ in range(4)
 #     ]
 
 def generate_colors():
-    colors = []
+    global colors
     for i in range(4):
         random_color = (round(random(), 3), round(random(), 3), round(random(), 3), 1)
         colors.append(random_color)
@@ -23,11 +25,11 @@ class MapManager():
     def start_new(self):
         self.land = render.attachNewNode('Land')
     
-    def add_block(self, position):
+    def add_block(self, pos):
         self.block = loader.loadModel(self.model)
-        self.color = self.get_color(position[2])
+        self.color = self.get_color(pos[2])
         self.block.setTexture(loader.loadTexture(self.texture), 1)
-        self.block.setPos(position)
+        self.block.setPos(pos)
         self.block.setColor(self.color)
 
         self.block.reparentTo(self.land)
