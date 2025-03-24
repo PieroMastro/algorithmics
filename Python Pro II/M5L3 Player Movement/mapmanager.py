@@ -29,6 +29,7 @@ class MapManager():
         self.block.setTexture(loader.loadTexture(self.texture), 1)
         self.block.setPos(position)
         self.block.setColor(self.color)
+
         self.block.reparentTo(self.land)
 
     def load_land(self, filename):
