@@ -5,7 +5,7 @@ pygame.init()
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
 BLACK = (0, 0, 0)
-background = (233, 242, 242)
+BACK_COLOR = (233, 242, 242)
 question_color = (40, 222, 88)
 answer_color = (58, 152, 240)
 
@@ -14,7 +14,7 @@ window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Preguntas y Respuestas')
 
 class TextArea():
-    def __init__(self, x_pos=0, y_pos=0, width=80, height=20, color=None):
+    def __init__(self, x_pos, y_pos, width, height, color=None):
         self.rect = pygame.Rect(x_pos, y_pos, width, height)
         self.rect.x = x_pos
         self.rect.y = y_pos
@@ -24,7 +24,7 @@ class TextArea():
         self.text = text
         self.image = pygame.font.Font(None, font_size).render(text, True, text_color)
 
-    def draw_card(self, shift_x=0, shift_y=0):
+    def draw_card(self, shift_x=10, shift_y=10):
         pygame.draw.rect(window, self.color, self.rect)
         window.blit(self.image, (self.rect.x + shift_x, self.rect.y + shift_y))
 
@@ -40,7 +40,7 @@ run = True
 
 while run:
 
-    window.fill(background)
+    window.fill(BACK_COLOR)
     question.draw_card(10, 50)
     answer.draw_card(10, 50)
 
