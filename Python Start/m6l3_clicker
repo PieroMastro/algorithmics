@@ -1,0 +1,62 @@
+import pygame
+pygame.init()
+
+SW, SH = 500, 500
+BACK_COLOR = (145, 165, 185)
+YELLOW = (200, 200, 0)
+BLUE = (0, 50, 150)
+
+
+screen = pygame.display.set_mode((SW, SW))
+pygame.display.set_caption('Clicker')
+
+class Area():
+    def __init__(self, x, y, width, height, color=None):
+        self.color = color
+        self.rect = pygame.Rect(x, y, width, height)
+
+    def change_color(self, new_color):
+        self.color = new_color
+
+    def fill(self):
+        pygame.draw.rect(screen, self.color, self.rect)
+
+    def outline(self, frame_color, thickness):
+        pygame.draw.rect(screen, frame_color, self.rect, thickness)
+
+class Label(Area):
+    def set_text(self, text, fsize=12, text_color=(0, 0, 0)):
+        self.image = pygame.font.SysFont('verdana', fsize).render(text, True, text_color)
+
+
+    def draw(self, shift_x=0, shift_y=0):
+        self.fill()
+        screen.blit(self.image, (self.rect.x + shift_x, self.rect.y + shift_y))
+
+x = 70
+cards = []
+
+for i in range(4):
+    new_card = Label(x, 170, 70, 100, YELLOW)
+    new_card.outline(BLUE, 10)
+    new_card.set_text('CLICK', 16)
+    cards.append(new_card)
+    x += 100
+
+run = True
+clock = pygame.time.Clock()
+
+while run:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    screen.fill(BACK_COLOR)
+
+    for card in cards:
+        card.draw(10, 30)
+
+    pygame.display.update()
+    clock.tick(40)
+
+pygame.quit()
