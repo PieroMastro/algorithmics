@@ -19,6 +19,7 @@ def do(query):
 
 def create_tables():
     open()
+    
     do('''CREATE TABLE IF NOT EXISTS quiz (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL
@@ -44,3 +45,5 @@ def create_tables():
             FOREIGN KEY (question_id) REFERENCES question (id)
         )'''
     )
+
+    close()
