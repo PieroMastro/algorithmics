@@ -51,7 +51,7 @@ def create_tables():
             FOREIGN KEY (quiz_id) REFERENCES quiz (id),
             FOREIGN KEY (question_id) REFERENCES question (id)
         )''')
-
+        
     close()
 
 def add_question():
@@ -100,16 +100,17 @@ def add_links():
             link = input('Desea agregar una pregunta a un cuestionario? (y/n)')
     close()
 
-def get_question_after(question_id=0, quiz_id=1):
+def get_next_question(question_id=0, quiz_id=1):
     start()
     query = '''
-        SELECT quiz_content.id, question.name, question.answer, question.incorrect_option_1, question.incorrect_option_2, question.incorrect_option_3
+        SELECT quiz_content.id, question.name, question.answer,
+            question.incorrect_option_1, question.incorrect_option_2, question.incorrect_option_3
         FROM quiz_content, question
         WHERE quiz_content.question_id = question.id
-        AND quiz_content.id > ? AND quiz_content.quiz_id = ?
+        AND quiz_content.id > (?) 
+        AND quiz_content.quiz_id == (?)
         ORDER BY quiz_content.id
-        LIMIT 1'''
-
+        '''
     cursor.execute(query, [question_id, quiz_id])
     result = cursor.fetchone()
     close()
@@ -134,6 +135,7 @@ def main():
     add_quiz()
     add_links()
     show_tables()
+    print(get_next_question(1))
 
 if __name__ == '__main__':
     main()
