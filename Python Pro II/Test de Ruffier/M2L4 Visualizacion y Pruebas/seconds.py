@@ -6,26 +6,24 @@ class Seconds(Label):
     done = BooleanProperty(False)
 
     def __init__(self, total, **kwargs):
-        self.done = False
-        self.current = 0
-        self.total = total
-        my_text = "Segundos transcurridos: " + str(self.current)
-        super().__init__(text=my_text)
-
-    def restart(self, total, **kwargs):
-        self.done = False
         self.total = total
         self.current = 0
-        self.text = "Segundos transcurridos: " + str(self.current)
-        self.start()
+        sec_text = f'Segundos transcurridos: {self.current}'
+        super().__init__(text=sec_text, **kwargs)
 
     def start(self):
-        Clock.schedule_interval(self.change, 1)
+        Clock.schedule_interval(self.counter, 1)
 
-    def change(self, dt):
+    def restart(self, total, *args):
+        self.total = total
+        self.current = 0
+        self.done = False
+        sec_text = f'Segundos transcurridos: {self.current}'
+        self.start()
+
+    def counter(self, dt):
         self.current += 1
-        self.text = "Segundos transcurridos: " + str(self.current)
+        self.text = f'Segundos transcurridos {self.current}'
         if self.current >= self.total:
             self.done = True
             return False
-
