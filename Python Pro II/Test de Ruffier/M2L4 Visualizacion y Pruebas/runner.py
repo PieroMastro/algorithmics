@@ -4,32 +4,43 @@ from kivy.animation import Animation
 from kivy.uix.boxlayout import BoxLayout
 
 class Runner(BoxLayout):
-    value = NumericProperty(0) # cuántos movimientos se han realizado
-    finished = BooleanProperty(False) # se han realizado todos los movimientos
+    value = NumericProperty(0) # Contador actual de sentadillas
+    finished = BooleanProperty(False) # Estado para finalizar
 
-    def __init__(self, total=10,  steptime=1, **kwargs):
+    def __init__(self, total=10, steptime=1, bg_color=(1, 0.9, 0, 1), txt_progress='Sentadilla', **kwargs):
         super().__init__(**kwargs)
         self.total = total
-        self.btext_inprogress = 'Sentadilla'
-        self.animation = (
-            Animation(pos_hint={'top': 0.1}, duration=steptime/2) 
-            + Animation(pos_hint={'top': 1.0}, duration=steptime/2)
-            )
+        self.txt_progress = txt_progress
+
+        self.animation = (Animation(pos_hint={'top': 0.1}, duration=steptime / 2) + Animation(pos_hint={'top': 1}, duration=steptime / 2))
+        
+        # Usar on_complete para conteo en repeticiones
         self.animation.repeat = True
-        self.animation.on_progress = self.next
-        self.btn = Button(size_hint=(1, 0.1), pos_hint={'top': 1.0}, background_color=(0.73, 0.15, 0.96, 1))
+        self.animation.bind(on_complete=self.next) 
+
+        self.btn = Button(
+            pos_hint={'top': 1},
+            size_hint=(1, 0.1),
+            background_color=bg_color,
+            text=txt_progress
+        )
         self.add_widget(self.btn)
+
+    def restart(self, total):
+        self.total = total
+        self.start()
 
     def start(self):
         self.value = 0
         self.finished = False
-        self.btn.text = self.btext_inprogress 
-        self.animation.repeat = True
+        self.animation.repeat = True       
+        # Iniciar la animación SIEMPRE
         self.animation.start(self.btn)
 
-    def next(self, widget, step):
-        if step == 1.0:
-            self.value += 1
-            if self.value >= self.total:
-                self.animation.repeat = False
-                self.finished = True
+    def next(self, animation, widget): 
+        self.value += 1
+
+        if self.value >= self.total:
+            self.animation.stop(self.btn)
+            self.btn.text = f"¡{self.total} Completadas!"
+            self.finished = True
