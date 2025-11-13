@@ -1,9 +1,17 @@
+
 txt_instruction = '''
-Esta aplicación le permitiría usar el test de Ruffier \n para realizar un diagnóstico primario de su salud.\n
-El test de Ruffier es una serie de ejercicios \n destinados a evaluar el rendimiento cardíaco durante el ejercicio físico.\n
-La frecuencia cardíaca de la persona evaluada es contada por 15 segundos.\n
-Luego, en menos de 45 segundos, la persona evaluada debe realizar 30 sentadillas.\n
-Después de que termine el ejercicio físico, el pulso se vuelve a contar: \n el número de pulsaciones por los primeros 15 segundos; luego, 30 segundos de descanso;\n luego, el número de pulsaciones por los últimos 15 segundos.\n'''
+Bienvenido al Test de Ruffier.
+
+Siga las siguientes instrucciones para evaluar su estado físico:
+
+1. Ingrese su nombre y edad.
+2. Mida su pulso en reposo (P1).
+3. Realice 30 sentadillas en 45 segundos.
+4. Mida su pulso inmediatamente después (P2).
+5. Mida su pulso un minuto después (P3).
+
+Presione "Iniciar" para continuar.
+'''
 
 txt_test1 = '''Mide tu pulso por 15 segundos.\n
 Escribe tu resultado en el campo correspondiente.'''
@@ -17,4 +25,3 @@ durante los primeros 15 segundos y luego durante los últimos 15 segundos del mi
 Escribe tus resultados en los campos correspondientes.''' 
 
 txt_sits = 'Realiza 30 sentadillas en 45 segundos.'
-
