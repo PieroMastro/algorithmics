@@ -8,7 +8,7 @@ from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
 
 from instructions import txt_instruction, txt_test1, txt_test2, txt_test3, txt_sits
-from ruffier import test
+from ruffier import ruffier_index
 
 from seconds import Seconds
 from sits import Sits
@@ -28,7 +28,7 @@ def check_int(str_num):
     except:
         return False
 
-class InstrScr(Screen):
+class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
     
@@ -59,6 +59,7 @@ class InstrScr(Screen):
         self.add_widget(outer)
 
     def next(self):
+        global name, age
         name = self.in_name.text
         age = check_int(self.in_age.text)
         if age == False or age < 7:
@@ -73,7 +74,7 @@ class PulseScr(Screen):
         self.next_screen = False
         
         instr = Label(text=txt_test1)
-        self.lbl_sec = Seconds(15)
+        self.lbl_sec = Seconds(5)
         self.lbl_sec.bind(done=self.sec_finished)
 
         line = BoxLayout(size_hint=(0.8, None), height='30sp')
@@ -84,7 +85,7 @@ class PulseScr(Screen):
         line.add_widget(lbl_result)
         line.add_widget(self.in_result)
     
-        self.btn = Button(text='Start', pos_hint={'center_x': 0.5})
+        self.btn = Button(text='Start', size_hint=(0.8, 1), pos_hint={'center_x': 0.5})
         self.btn.background_color = btn_color
         self.btn.on_press = self.next
     
@@ -105,19 +106,13 @@ class PulseScr(Screen):
         self.btn.set_disabled(False)
         self.btn.text = 'Continuar'
 
-        self.line3.remove_widget(self.btn)
-        self.btn_back = Button(text='Regresar')
-        self.btn_back.background_color = btn_color
-        self.line3.add_widget(self.btn_back)
-        self.line3.add_widget(self.btn)
-        self.btn_back.on_press = self.back
 
     def next(self):
+        global p1
         if not self.next_screen:
             self.btn.set_disabled(True)
             self.lbl_sec.start()
         else:
-            global p1
             p1 = check_int(self.in_result.text)
             if p1 == False or p1 <= 0:
                 p1 = 0
@@ -215,13 +210,11 @@ class PulseScr2(Screen):
     def sec_finished(self, *args):
         if self.lbl_sec.done == True:
             if self.stage == 0:
-                # hemos terminado el primer conteo; vamos a descansar
                 self.stage = 1
                 self.lbl1. text = 'Rest'
                 self.lbl_sec.restart(30)
                 self.in_result1.set_disabled(False)
         elif self.stage == 1:
-            # El descanso ha terminado, vamos a codificar
             self.stage = 2
             self.lbl1 = Label(text='Cuenta tu pulso')
             self.lbl_sec.restart(15)
@@ -232,11 +225,11 @@ class PulseScr2(Screen):
             self.next_screen = True
 
     def next(self):
+        global p2, p3
         if not self.next_screen:
             self.btn.set_disabled(True)
             self.lbl_sec.start()
         else:
-            global p2, p3
             p2 = check_int(self.in_result1.text)
             p3 = check_int(self.in_result2.text)
             if p2 == False:
@@ -258,22 +251,21 @@ class Result(Screen):
         self.outer.add_widget(self.instr)
     
         self.add_widget(self.outer)
-        self.on_enter = self.before
 
-    def before(self):
+    def on_enter(self, *args):
         global name
-        self.instr.text = name + '\n' + test(p1, p2, p3, age)
+        self.indice.text = str(ruffier_index(pulse_1, pulse_2, pulse_3))
+        self.indice.text = f'{name}, ¡Tu índice de Ruffier es: {self.indice.text}!'
 
-class HeartCheck(App):
+class RuffierApp(App):
     def build(self):
-        sm = ScreenManager()
-        sm.add_widget(InstrScr(name='instr'))
-        sm.add_widget(PulseScr(name='pulse1'))
-        sm.add_widget(CheckSits(name='sits'))
-        sm.add_widget(PulseScr2(name='pulse2'))
-        sm.add_widget(Result(name='resultado'))
-        return sm
+        screen_manager = ScreenManager()
+        screen_manager.add_widget(MainScreen(name='instr'))
+        screen_manager.add_widget(PulseScr(name='pulse1'))
+        screen_manager.add_widget(CheckSits(name='sits'))
+        screen_manager.add_widget(PulseScr2(name='pulse2'))
+        screen_manager.add_widget(Result(name='resultado'))
+        return screen_manager
 
-app = HeartCheck()
+app = RuffierApp()
 app.run()
-
