@@ -9,6 +9,7 @@ from kivy.uix.textinput import TextInput
 # Contenido de las instrucciones
 from instructions import instructions_text, txt_test1, txt_test2, txt_test3, txt_sits
 from ruffier import ruffier_index
+from seconds import Seconds
 
 # Variables Globales
 age = 7
@@ -16,9 +17,9 @@ name = ''
 pulse_1, pulse_2, pulse_3 = 0, 0, 0
 
 # Manejo de excepciones
-def check_int(number_as_str):
+def check_int(number:str):
     try:
-        return int(number_as_string)
+        return int(number)
     except ValueError:
         return False
 
@@ -77,12 +78,18 @@ class MainScreen(Screen):
 class Pulse1Screen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.next_screen = False
 
         inst_text = Label(text=txt_test1, halign='center', valign='top')
         pulse1_text = Label(text='Ingresar el pulso:', halign='left', size_hint_x=0.5)
         self.pulse1_input = TextInput(multiline=False, size_hint_x=1.0)
-        self.button = Button(text='Siguiente', size_hint=(0.3, 0.1), pos_hint={'center_x': 0.5})
+        # Inhabilitar el campo de ingreso de data
+        self.pulse1_input.set_disabled(True)
+        self.button = Button(text='Siguiente', size_hint=(0.3, 0.2), pos_hint={'center_x': 0.5})
         self.button.on_press = self.next
+        # 🟢 Inicialización de la clase Seconds con el nuevo constructor
+        self.timer = Seconds(total=5)
+        self.timer.bind(done=self.timer_finished)
 
         main_layout = BoxLayout(orientation='vertical', spacing=15, padding=30)
 
@@ -91,15 +98,32 @@ class Pulse1Screen(Screen):
         line_1.add_widget(self.pulse1_input)
 
         main_layout.add_widget(inst_text)
+        main_layout.add_widget(self.timer)
         main_layout.add_widget(line_1)
         main_layout.add_widget(self.button)
 
         self.add_widget(main_layout)
 
+    def timer_finished(self, *args):
+        self.pulse1_input.set_disabled(False)
+        self.button.set_disabled(False)
+        self.button.text = "Continuar"
+        self.next_screen = True
+
     def next(self):
         global pulse_1
-        pulse_1 = int(self.pulse1_input.text)
-        self.manager.current = 'sits'
+
+        if not self.next_screen:
+            self.button.set_disabled(True)
+            self.timer.start()
+        else:
+            pulse_1 = check_int(self.pulse1_input.text)
+            
+            if pulse_1 is False or pulse_1 < 8:
+                pulse_1 = 0
+                self.pulse1_input.text = str(pulse_1)
+            else:
+                self.manager.current = 'sits'
 
 
 class SitsScreen(Screen):
@@ -124,16 +148,35 @@ class SitsScreen(Screen):
 class Pulse2Screen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        
+        # Estado 0: Iniciar P2 | 1: Ingreso P2 + Iniciar Descanso | 2: Descanso Terminado + Iniciar P3 | 3: Ingreso P3 + Validar
+        self.stage = 0 
+        
+        inst_text = Label(text=txt_test3, halign='center', valign='top', size_hint_y=0.2)
+        self.status_label = Label(text='Pulsa "Iniciar P2" para iniciar la medición', size_hint_y=0.1)
 
-        inst_text = Label(text=txt_test3, halign='center', valign='top')
-        pulse2_text = Label(text='Resultado:', halign='left', size_hint_x=0.5)
+        # 🟢 Inicialización de la clase Seconds con el nuevo constructor (usamos 15s como valor inicial)
+        self.timer = Seconds(total=15)
+        self.timer.bind(done=self.timer_finished)
+
+        # Campos de Pulso
+        pulse2_text = Label(text='Pulso 2 (Inmediato):', halign='left', size_hint_x=0.5)
         self.pulse2_input = TextInput(multiline=False, size_hint_x=1.0)
-        pulse3_text = Label(text='Resultado despues del descanso:', halign='left', size_hint_x=0.5)
+        pulse3_text = Label(text='Pulso 3 (Post-Descanso):', halign='left', size_hint_x=0.5)
         self.pulse3_input = TextInput(multiline=False, size_hint_x=1.0)
-        self.button = Button(text='Siguiente', size_hint=(0.3, 0.1), pos_hint={'center_x': 0.5})
+        
+        self.pulse2_input.set_disabled(True)
+        self.pulse3_input.set_disabled(True)
+        
+        self.button = Button(text='Iniciar P2 (15s)', size_hint=(0.5, 0.1), pos_hint={'center_x': 0.5})
         self.button.on_press = self.next
 
+        # Layouts
         main_layout = BoxLayout(orientation='vertical', spacing=15, padding=30)
+
+        line_status = BoxLayout(size_hint_y=0.2)
+        line_status.add_widget(self.status_label)
+        line_status.add_widget(self.timer)
 
         line_1 = BoxLayout(size_hint_y=None, height='30sp')
         line_1.add_widget(pulse2_text)
@@ -144,24 +187,86 @@ class Pulse2Screen(Screen):
         line_2.add_widget(self.pulse3_input)
 
         main_layout.add_widget(inst_text)
+        main_layout.add_widget(line_status)
         main_layout.add_widget(line_1)
         main_layout.add_widget(line_2)
         main_layout.add_widget(self.button)
 
         self.add_widget(main_layout)
 
+    def timer_finished(self, *args):
+        # El temporizador ha terminado en la etapa actual
+        if self.stage == 0:
+            # P2 terminado. Habilitar entrada y cambiar botón a Descanso
+            self.status_label.text = '¡TIEMPO! Ingresa el Pulso 2 y pulsa "Descanso"'
+            self.button.text = 'Descanso (30s)'
+            self.button.set_disabled(False)
+            self.pulse2_input.set_disabled(False)
+            self.stage = 1
+            
+        elif self.stage == 1:
+            # Descanso terminado. Iniciar P3
+            self.status_label.text = '¡TIEMPO! Pulsa "Start P3" para la medición final'
+            self.button.text = 'Iniciar P3 (15s)'
+            self.button.set_disabled(False)
+            self.stage = 2
+            
+        elif self.stage == 2:
+            # P3 terminado. Habilitar entrada y cambiar botón a Finalizar
+            self.status_label.text = '¡FINALIZADO! Ingresa el Pulso 3 y pulsa "Finalizar"'
+            self.button.text = 'Finalizar'
+            self.button.set_disabled(False)
+            self.pulse3_input.set_disabled(False)
+            self.stage = 3 # Listo para validar
+
     def next(self):
-        global pulse_2, pulse_3
-        pulse_2 = int(self.pulse2_input.text)
-        pulse_3 = int(self.pulse3_input.text)
-        self.manager.current = 'result'
+        if self.stage == 0:
+            # Etapa 0: Iniciar P2 (15s)
+            self.button.set_disabled(True)
+            self.status_label.text = 'Contando 15 segundos para Pulso 2...'
+            self.timer.restart(15)
+
+        elif self.stage == 1:
+            # Etapa 1: Tomar P2 e Iniciar Descanso (30s)
+            global pulse_2
+            pulse_2 = check_int(self.pulse2_input.text)
+            
+            if pulse_2 == False or pulse_2 < 8:
+                pulse_2 = 0
+                self.pulse2_input.text = str(pulse_2)
+                self.status_label.text = 'Error en Pulso 2. Debe ser > 0 y numérico.'
+                return
+            
+            # 2. Iniciar descanso
+            self.pulse2_input.set_disabled(True)
+            self.button.set_disabled(True)
+            self.status_label.text = 'Descanso de 30 segundos...'
+            self.timer.restart(30)
+            
+        elif self.stage == 2:
+            # Etapa 2: Iniciar P3 (15s)
+            self.button.set_disabled(True)
+            self.status_label.text = 'Contando 15 segundos para Pulso 3...'
+            self.timer.restart(15)
+            
+        elif self.stage == 3:
+            # Etapa 3: Validar P3 y Avanzar
+            global pulse_3
+            pulse_3 = check_int(self.pulse3_input.text)
+            
+            if pulse_3 == False or pulse_3 < 8:
+                pulse_3 = 0
+                self.pulse3_input.text = str(pulse_3)
+                self.status_label.text = 'Error en Pulso 3. Debe ser > 0 y numérico.'
+            else:
+                self.manager.current = 'result'
 
 
 class ResultScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.indice = Label(text='Tu índice de Ruffier es: ', halign='left', valign='top')
-        self.resultado = Label(text='Aqui va el resultado: ', halign='left', valign='top')
+        self.resultado = Label(text='CORRELACIONAR INDICE Y RESULTADO', halign='left', valign='top')
         self.button = Button(text='Volver al Inicio', size_hint=(0.5, 0.2), pos_hint={'center_x': 0.5})
         self.button.on_press = self.next
 
