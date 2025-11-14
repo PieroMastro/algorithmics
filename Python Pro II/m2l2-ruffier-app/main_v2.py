@@ -168,7 +168,7 @@ class Pulse2Screen(Screen):
         self.pulse2_input.set_disabled(True)
         self.pulse3_input.set_disabled(True)
         
-        self.button = Button(text='Iniciar P2 (15s)', size_hint=(0.5, 0.1), pos_hint={'center_x': 0.5})
+        self.button = Button(text='Iniciar P2 (15s)', size_hint=(0.3, 0.075), pos_hint={'center_x': 0.5})
         self.button.on_press = self.next
 
         # Layouts
