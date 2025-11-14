@@ -129,20 +129,33 @@ class Pulse1Screen(Screen):
 class SitsScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.next_screen = False
 
+        self.timer = Seconds(total=5)
+        self.timer.bind(done=self.sec_finished)
         inst_text = Label(text=txt_test2, halign='center', valign='top')
-        self.button = Button(text='Siguiente', size_hint=(0.3, 0.1), pos_hint={'center_x': 0.5})
+        self.button = Button(text='Iniciar', size_hint=(0.3, 0.2), pos_hint={'center_x': 0.5})
         self.button.on_press = self.next
 
         main_layout = BoxLayout(orientation='vertical', spacing=15, padding=30)
 
         main_layout.add_widget(inst_text)
+        main_layout.add_widget(self.timer)
         main_layout.add_widget(self.button)
 
         self.add_widget(main_layout)
 
+    def sec_finished(self, *args):
+        self.button.set_disabled(False)
+        self.button.text = 'Continuar'
+        self.next_screen = True
+
     def next(self):
-        self.manager.current = 'pulse2'
+        if not self.next_screen:
+            self.button.set_disabled(True)
+            self.timer.start()
+        else:
+            self.manager.current = 'pulse2'
 
 
 class Pulse2Screen(Screen):
