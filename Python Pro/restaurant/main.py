@@ -49,7 +49,7 @@ def menu_entry(menu):
     for i in range(num):
         dish_id = i + 1
         name = input("Ingrese el platillo: ")
-        description = input("Ingrese ela descripción del platillo: ")
+        description = input("Ingrese la descripción del platillo: ")
         price = float(input("Ingrese el precio de 1 porción: ")) 
         dish = Dish(dish_id, name, description, price)
         menu.set_menu(dish)
@@ -77,6 +77,7 @@ def order_entry(menu):
         
     print(f'------------------------------------------')
     print(f'TOTAL FINAL: ${order.get_total()}')
+
 
 # INTERFACE
 def main():
@@ -108,5 +109,4 @@ Para hacer algo, ingrese el número correspondiente.
         else:
             print("Opción no válida. Intente de nuevo.")
 
-if __name__ == "__main__":
-    main()
+main()
