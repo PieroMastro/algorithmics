@@ -1,35 +1,44 @@
-# CLASSES
+# CLASES
 class Dish():
-    def __init__(self, name, quantity, price):
+    def __init__(self, dish_id:int, name:str, description:str, price:float):
+        self.dish_id = dish_id
         self.name = name
-        self.quantity = quantity
+        self.description = description
         self.price = price
+
     def get_dish_info(self):
-        return f'{self.name} ({self.quantity}) - ${self.price}'
+        return f'{self.name}: {self.description} - ${self.price}'
+
 
 class Menu():
-    def __init__(self, name):
-        self.products = []
+    def __init__(self, menu_id:int, name:str):
+        self.menu_id = menu_id
         self.name = name
-    def set_menu(self, dish):
-        self.products.append(dish)
+        self.products = list()
+
+    def set_menu(self, item):
+        self.products.append(item)
+    
     def get_menu(self):
-        print(self.name)
+        print(f'- {self.name} -')
         for item in self.products:
             print(item.get_dish_info())
+        return self.products
 
+    
 class Order():
-    def __init__(self):
-        self.order = []
+    def __init__(self, number:int):
+        self.number = number
+        self.order = list()
         self.total = 0
+         
     def set_order(self, item):
         self.order.append(item)
         self.total += float(item.price)
+
     def get_order(self):
-        order_info = []
-        for item in self.order:
-            order_info.append(item.get_dish_info())
-        return order_info
+        return self.order
+    
     def get_total(self):
         return self.total
 
@@ -38,30 +47,36 @@ class Order():
 def menu_entry(menu):
     num = int(input("¿Cuántos platillos desea agregar al menú? "))
     for i in range(num):
+        dish_id = i + 1
         name = input("Ingrese el platillo: ")
-        quantity = input("Ingrese el tamaño de la porción: ")
-        price = input("Ingrese el precio de 1 porción: ")
-        dish = Dish(name, quantity, price)
+        description = input("Ingrese ela descripción del platillo: ")
+        price = float(input("Ingrese el precio de 1 porción: ")) 
+        dish = Dish(dish_id, name, description, price)
         menu.set_menu(dish)
 
 def order_entry(menu):
-    order = Order()
+    mesa = int(input("Número de mesa: "))
+    order = Order(mesa)
+    
     num = int(input("¿Cuántos platillos desea pedir? "))
     for i in range(num):
-        question = input('Ingrese el platillo: ')
+        question = input('Ingrese el nombre del platillo: ')
         found = False
         for item in menu.products:
-            if item.name == question:
+            if item.name.lower() == question.lower():
                 order.set_order(item)
                 found = True
                 break
         if not found:
             print(f'El platillo "{question}" no está en el menú.')
 
-    print("Su pedido es:")
+    print(f"\n--- Detalle de la Orden (Mesa {order.number}) ---")
+    
     for item in order.get_order():
-        print(item)
-    print(f'Total: ${order.get_total()}')
+        print(f"• {item.get_dish_info()}")
+        
+    print(f'------------------------------------------')
+    print(f'TOTAL FINAL: ${order.get_total()}')
 
 # INTERFACE
 def main():
