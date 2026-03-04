@@ -1,111 +1,113 @@
-print('''     
-Este es un juego de misiones, para superarlo debes elegir entre múltiples respuestas.
+# ====================================================
+#          PROYECTO 1 | MISION DE TEXTO             
+# ====================================================
+
+print('''====================================================
+          LA CABAÑA DE LOS SUSURROS                
+====================================================
+Este es un juego de misiones interactivo.
+Tus decisiones determinarán el destino de tus amigos.
 ¡Ten cuidado y buena suerte!
-''')
 
-print('''
-Para seleccionar una respuesta, elige la letra correspondiente
-''')
- 
-print('''
-Estabas caminando por el bosque con tus amigos cuando se encontraron con una choza abandonada.
-Decidir ingresar en ella no fue lo mejor - la choza estaba maldita. ¡Tus amigos han sido secuestrados y sólo tú puedes rescatarlos!
-''')
- 
-answer_1 = input('''
-Tienes unas llaves y una pequeña navaja en tus manos.
-Frente a ti hay una antigua puerta de madera.
-¿Qué haces?
- 
-a - intentar romper la puerta
-b - intentar abrirla con las llaves
-c - intentar forzarla con la navaja
-d - buscar otra opción''')
- 
-if answer_1 == "a":
-    print('''
-La puerta no cedió.
-Debes buscar otro camino, es una pena haber perdido el tiempo.
-''')
-elif answer_1 == "b":
-    print('''
-Las llaves se rompieron, no fue una buena idea.
-''')
-elif answer_1 == "c":
-    print('''
-Fruto de la desesperación, no es posible.
-Por desgracia, la puerta está cerrada y la navaja se ha roto.
-''')
-else:
-    print('''
-La puerta se ve muy sólida, lo mejor es buscar otro camino.
-''')
- 
-answer_2 = input('''
-Mirando alrededor notas una ventana cerrada. El pestillo está del otro lado, pero hay un espacio bastante amplio.
-Quizás podrías intentar levantar el pestillo con la navaja.
- 
-a - intentar levantar el pestillo con la navaja
-b - romper el vidrio con tu hombro
-c - tratar de aflojar el marco de la ventana
-d - pedir ayuda
-''')
- 
-if answer_2 == "a":
-    print('''
-Luego de unos minutos de tormento, eres capaz de levantar el pestillo.
-La ventana está abierta, ahora puedes salir de la casa.
-''')
-elif answer_2 == "b":
-    print('''
-No es la mejor idea. El vidrio no cederá y te dolerá el hombro por un momento.
-Lo mejor es usar la navaja.
-''')
-elif answer_2 == "c":
-    print('''
-Tras media hora, es obvio que esta no es la mejor idea. El marco, si bien es viejo, es sólido y no cederá.
-Prueba con la navaja.
-''')
-else:
-    print('''
-Tras media hora de gritar, has fallado.
-Tienes que salir por tu cuenta.
-Es hora de usar la navaja. 
-''')
- 
-answer_3 = input('''
-Saliste de la casa. Encuentras unas extrañas llaves en el suelo bajo la ventana.
-Cerca de la casa encuentras una cabina donde tus amigos están encerrados.
-¡Debes rescatarlos!
-La cabina es vieja y temblorosa.
-Hay una enorme cerradura colgando de la puerta.
-¿Qué haces?
- 
-a - tratar de romper la cerradura con la navaja
-b - sacudir la cabina
-c - tratar de abrir la cerradura con las llaves que encontraste
-d - tratar de romper la puerta con tu pie
-''')
- 
-if answer_3 == "a":
-    print('''
-No fue una acción exitosa el intentar romper una cerradura con una navaja
-de mano, pero valía la pena intentarlo.
-Desafortunadamente, no obtuviste ningún resultado.
-''')
-elif answer_3 == "b":
-    print('''
-Parece ser que la cabina era muy endeble.
-Tan sólo un pequeño toque bastó para hacerla rodar a un acantilado con tus amigos en ella.
-''')
-elif answer_3 == "c":
-    print('''
-Es muy fácil, pero funcionó.
-Las llaves abrieron la cerradura y todos están libres.
-''')
-else:
-    print('''
-Parece ser que la cabina era muy endeble.
-El impacto la rompió y la hizo caer rodando hacia un acantilado, donde por inercia fuiste a parar tú también.
-''')
+CONTEXTO:
+Un paseo por el bosque terminó en pesadilla. Tus amigos han sido
+arrastrados al interior de una construcción de madera podrida.
+Estás solo, con un manojo de llaves oxidadas y una navaja.
 
+Frente a ti, la puerta principal emite un hedor a moho y algo metálico.
+Sientes que la madera pulsa como si tuviera un corazón propio.
+
+¿Qué decides hacer?
+1 - Arremeter contra la madera con el hombro
+2 - Probar las llaves oxidadas en la cerradura
+3 - Forzar la cerradura con la navaja
+4 - Bordear la estructura buscando otra entrada''')
+
+ans1 = input("> ")
+
+if ans1 == "1":
+    print('''
+[RESULTADO]: La puerta es de roble reforzado. Solo logras un fuerte dolor
+en el hombro y escuchas un gruñido desde el interior. Debes buscar otro camino.''')
+elif ans1 == "2":
+    print('''
+[RESULTADO]: Las llaves no encajan en absoluto. El mecanismo parece
+sellado por una fuerza invisible o una sustancia extraña.''')
+elif ans1 == "3":
+    print('''
+[RESULTADO]: La hoja de tu navaja se dobla peligrosamente. La cerradura
+está llena de una sustancia pegajosa negra que desprende calor.''')
+else:
+    print('''
+[RESULTADO]: Decides ser cauteloso. Al bordear la cabaña, evitas la trampa
+de la entrada principal y encuentras una debilidad en el lateral.''')
+
+# --- ACTO 2: LA VENTANA DEL PÁNICO ---
+print('''
+----------------------------------------------------
+Llegas a una ventana trasera. El vidrio está sucio, pero ves sombras
+moviéndose dentro. El pestillo interior está a la vista por una grieta.
+
+¿Cómo entrarás?
+1 - Maniobrar el pestillo con la punta de la navaja
+2 - Romper el cristal de un golpe con una piedra
+3 - Intentar desmantelar el marco de madera podrida
+4 - Gritar para localizar a tus amigos primero''')
+
+ans2 = input("> ")
+
+if ans2 == "1":
+    print('''
+[ÉXITO]: Con precisión quirúrgica, deslizas el seguro.
+La ventana cede sin hacer ruido. Logras cruzar la casa en silencio.''')
+elif ans2 == "2":
+    print('''
+[RIESGO]: El estruendo es ensordecedor. Escuchas gritos inhumanos
+acercándose. Tienes que correr frenéticamente hacia el patio trasero.''')
+elif ans2 == "3":
+    print('''
+[RETRASO]: Pierdes demasiado tiempo luchando con los clavos oxidados.
+Sientes que la oscuridad de la casa te observa. Llegas tarde al patio.''')
+else:
+    print('''
+[FALLO]: Tu grito atrae a una presencia oscura del bosque.
+Debes huir despavorido hacia la zona trasera para no ser capturado.''')
+
+# --- ACTO 3: EL ALTAR DE LAS SOMBRAS ---
+print('''
+----------------------------------------------------
+Logras llegar al patio trasero. Allí ves una jaula de hierro viejo
+colgando sobre un foso oscuro. Tus amigos están dentro, aterrados.
+Una cerradura rúnica brilla con una luz mortecina en la base.
+
+En el suelo, encuentras una llave que emite un tenue brillo azul.
+
+¡Es el momento final! ¿Qué haces?
+1 - Intentar cortar los barrotes con la navaja
+2 - Sacudir la estructura para acercarla a tierra firme
+3 - Usar la llave brillante que encontraste en el altar
+4 - Patear el mecanismo de anclaje de la cadena''')
+
+ans3 = input("> ")
+
+if ans3 == "3":
+    print('''
+****************************************************
+¡VICTORIA! La llave encaja perfectamente con la runa.
+La cerradura se deshace como ceniza y la jaula se abre.
+Tus amigos están libres y la maldición del bosque se desvanece.
+****************************************************''')
+elif ans3 == "2":
+    print('''
+[TRAGEDIA]: El soporte podrido no aguanta el peso extra.
+La jaula cede y cae al foso profundo. Has fallado la misión.''')
+elif ans3 == "1":
+    print('''
+[FALLO]: El acero es mágico. Tu navaja se rompe en pedazos.
+No tienes forma de abrir la jaula. El tiempo se agota...''')
+else:
+    print('''
+[DESASTRE]: El impacto bloquea el engranaje permanentemente.
+La jaula queda suspendida para siempre. Te quedas solo en el bosque.''')
+
+print("\nFin del juego. Gracias por jugar.")
