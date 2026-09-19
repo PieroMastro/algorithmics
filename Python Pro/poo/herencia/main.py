@@ -35,24 +35,19 @@ class ProductoPerecedero(Producto):
 # ==========================================
 class GestorInventario:
     def __init__(self):
-        self.productos = []
+        # TODO: Inicializar la lista vacía self.productos
+        pass
 
     def agregar_producto(self, producto: Producto):
-        self.productos.append(producto)
-        print(f"-> '{producto.nombre}' agregado con éxito.\n")
+        # TODO: Añadir el objeto 'producto' a la lista self.productos
+        # TODO: Mostrar mensaje de confirmación en consola
+        pass
 
     def mostrar_inventario(self):
-        if not self.productos:
-            print("\nEl inventario está vacío.\n")
-            return
-        
-        print("\n--- INVENTARIO ACTUAL ---")
-        total_acumulado = 0
-        for p in self.productos:
-            # TODO: Imprimir la info de cada producto invocando obtener_info()
-            # TODO: Sumar el resultado de calcular_total() a 'total_acumulado'
-            pass
-        print(f"Valor total del inventario: ${total_acumulado:.2f}\n")
+        # TODO: Verificar si la lista está vacía y notificar al usuario
+        # TODO: Recorrer self.productos, imprimir p.obtener_info() y sumar el total de p.calcular_total()
+        # TODO: Mostrar el valor total acumulado del inventario
+        pass
 
     def menu(self):
         while True:
@@ -75,7 +70,7 @@ class GestorInventario:
                 pre = float(input("Precio: "))
                 cant = int(input("Cantidad: "))
                 dias = int(input("Días para vencer: "))
-                # TODO: Crear una instancia de ProductoPerecedero y agregarla
+                # TODO: Crear la instancia de ProductoPerecedero y agregarla con self.agregar_producto()
                 pass
 
             elif opcion == "3":
