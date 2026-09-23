@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
-from instr import *
+from instructions import *
 from test import TestWindow
 
 
