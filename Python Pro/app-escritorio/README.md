@@ -1,17 +1,14 @@
-# Ruffier Test - Aplicación de Evaluación Cardíaca
+# 🫀 Ruffier Test - Aplicación de Evaluación Cardíaca
 
 **Ruffier Test** es una aplicación de escritorio desarrollada en **Python** y **PyQt5** que guía al usuario a través de la Prueba de Ruffier: un test médico-deportivo utilizado para evaluar la capacidad de recuperación cardíaca y el estado de forma física tras el esfuerzo.
 
 ---
 
 ## 📋 Tabla de Contenidos
-- [Características](#-características)
-- [¿Qué es la Prueba de Ruffier?](#-qué-es-la-prueba-de-ruffier)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Requisitos Previos](#-requisitos-previos)
-- [Instalación y Ejecución](#-instalación-y-ejecución)
-- [Flujo de la Aplicación](#-flujo-de-la-aplicación)
-- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
+- [Características](#características)
+- [¿Qué es la Prueba de Ruffier?](#qué-es-la-prueba-de-ruffier)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Notas Importantes](#notas-importantes)
 
 ---
 
@@ -50,13 +47,14 @@ ruffier-test/
 ├── instr.py        # Módulo de constantes, dimensiones de ventana y textos informativos
 ├── main.py         # Módulo principal (Ventana de Bienvenida: MainWindow)
 ├── test.py         # Módulo de captura de datos y ejercicios (TestWin)
-└── result.py       # Módulo de procesamiento y diagnóstico final (ResultWin)/
+└── result.py       # Módulo de procesamiento y diagnóstico final (ResultWin)
 ```
+
 ---
 
-## ⚠️ Notas:
-* **Esta aplicación tiene fines educativos y de autoevaluación orientativa.** 
-* **No sustituye un diagnóstico médico profesional.**
-* **Si experimentas mareos, dolor de pecho o falta de aire durante la prueba, detén el ejercicio inmediatamente.**
+## ⚠️ Notas Importantes
+* Esta aplicación tiene fines educativos y de autoevaluación orientativa.
 
+* No sustituye un diagnóstico médico profesional.
 
+* Si experimentas mareos, dolor de pecho o falta de aire durante la prueba, detén el ejercicio inmediatamente.
